@@ -1,1759 +1,3261 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<html><head><title>Copy of Rocket Launch Website to Greet Khushi</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Stellar Communications | Mission: Khushi</title>
+
+<style>
+
+* { box-sizing: border-box; }
+
+
+
+html, body {
+
+margin: 0;
+
+padding: 0;
+
+height: 100%;
+
+background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+overflow: hidden;
+
+color: #f8fafc;
+
+}
+
+.mission-control { position: relative; width: 100%; height: 100%; }
+
+.header {
+
+position: absolute;
+
+top: 0; left: 0; right: 0;
+
+background: rgba(15, 23, 42, 0.98);
+
+backdrop-filter: blur(20px);
+
+border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+
+padding: 24px 48px;
+
+z-index: 100;
+
+}
+
+.header-content {
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+max-width: 1400px;
+
+margin: 0 auto;
+
+}
+
+.logo {
+
+display: flex;
+
+align-items: center;
+
+gap: 15px;
+
+}
+
+.logo-icon {
+
+width: 36px; height: 36px;
+
+background: linear-gradient(135deg, #3b82f6, #1e40af);
+
+border-radius: 6px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+font-size: 16px;
+
+}
+
+.logo-text {
+
+font-size: 1.25rem;
+
+font-weight: 500;
+
+letter-spacing: -0.025em;
+
+}
+
+.status-indicator {
+
+display: flex;
+
+align-items: center;
+
+gap: 8px;
+
+padding: 6px 14px;
+
+background: rgba(34, 197, 94, 0.08);
+
+border: 1px solid rgba(34, 197, 94, 0.2);
+
+border-radius: 6px;
+
+font-size: 0.875rem;
+
+font-weight: 500;
+
+}
+
+.status-dot {
+
+width: 8px; height: 8px;
+
+background: #22c55e;
+
+border-radius: 50%;
+
+animation: pulse 2s infinite;
+
+}
+
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.planet-selection-hint {
+
+position: absolute;
+
+top: 120px; left: 50%;
+
+transform: translateX(-50%);
+
+background: rgba(15, 23, 42, 0.95);
+
+backdrop-filter: blur(20px);
+
+border: 1px solid rgba(148, 163, 184, 0.2);
+
+border-radius: 12px;
+
+padding: 16px 24px;
+
+z-index: 60;
+
+text-align: center;
+
+animation: hint-pulse 3s ease-in-out infinite;
+
+}
+
+@keyframes hint-pulse { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.6; } }
+
+.hint-text {
+
+font-size: 0.875rem;
+
+color: #94a3b8;
+
+margin: 0;
+
+display: flex;
+
+align-items: center;
+
+gap: 8px;
+
+}
+
+.space-field {
+
+position: absolute;
+
+top: 0; left: 0;
+
+width: 100%; height: 100%;
+
+overflow: hidden;
+
+}
+
+.stars-layer { position: absolute; width: 100%; height: 100%; }
+
+.star {
+
+position: absolute;
+
+background: #e2e8f0;
+
+border-radius: 50%;
+
+animation: subtle-twinkle 4s ease-in-out infinite;
+
+}
+
+.star.bright {
+
+background: #f8fafc;
+
+box-shadow: 0 0 2px rgba(248, 250, 252, 0.5);
+
+}
+
+@keyframes subtle-twinkle { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+
+.solar-system {
+
+position: absolute;
+
+top: 50%; left: 50%;
+
+transform: translate(-50%, -50%);
+
+width: 100%; height: 100%;
+
+}
+
+.orbit {
+
+position: absolute;
+
+border: 1px solid rgba(148, 163, 184, 0.06);
+
+border-radius: 50%;
+
+top: 50%; left: 50%;
+
+transform: translate(-50%, -50%);
+
+}
+
+.orbit-mercury { width: 200px; height: 200px; }
+
+.orbit-venus { width: 280px; height: 280px; }
+
+.orbit-earth { width: 360px; height: 360px; }
+
+.orbit-mars { width: 480px; height: 480px; }
+
+.orbit-jupiter { width: 720px; height: 720px; }
+
+.orbit-saturn { width: 900px; height: 900px; }
+
+.orbit-uranus { width: 1080px; height: 1080px; }
+
+.orbit-neptune { width: 1200px; height: 1200px; }
+
+.orbit-asteroid {
+
+width: 600px; height: 600px;
+
+border-style: dashed;
+
+border-color: rgba(148, 163, 184, 0.05);
+
+}
+
+.celestial-body {
+
+position: absolute;
+
+border-radius: 50%;
+
+top: 50%; left: 50%;
+
+cursor: pointer;
+
+transition: all 0.3s ease;
+
+min-width: 40px; min-height: 40px;
+
+pointer-events: auto;
+
+z-index: 10;
+
+}
+
+.celestial-body:hover {
+
+transform: scale(1.2);
+
+filter: brightness(1.3);
+
+z-index: 20;
+
+}
+
+.celestial-body.selected {
+
+animation: planet-selected 2s ease-in-out infinite;
+
+transform: scale(1.3);
+
+filter: brightness(1.4);
+
+z-index: 25;
+
+}
+
+@keyframes planet-selected {
+
+0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.3); }
+
+50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.5); }
+
+}
+
+.planet-orbit {
+
+position: absolute;
+
+top: 50%; left: 50%;
+
+transform: translate(-50%, -50%);
+
+animation-timing-function: linear;
+
+animation-iteration-count: infinite;
+
+pointer-events: none;
+
+z-index: 15;
+
+}
+
+.mercury-orbit { width: 200px; height: 200px; animation: orbit 25s linear infinite; }
+
+.venus-orbit { width: 280px; height: 280px; animation: orbit 35s linear infinite; }
+
+.earth-orbit { width: 360px; height: 360px; animation: orbit 45s linear infinite; }
+
+.mars-orbit { width: 480px; height: 480px; animation: orbit 60s linear infinite; }
+
+.jupiter-orbit { width: 720px; height: 720px; animation: orbit 120s linear infinite; }
+
+.saturn-orbit { width: 900px; height: 900px; animation: orbit 150s linear infinite; }
+
+.uranus-orbit { width: 1080px; height: 1080px; animation: orbit 200s linear infinite; }
+
+.neptune-orbit { width: 1200px; height: 1200px; animation: orbit 300s linear infinite; }
+
+@keyframes orbit {
+
+0% { transform: translate(-50%, -50%) rotate(0deg); }
+
+100% { transform: translate(-50%, -50%) rotate(360deg); }
+
+}
+
+.sun {
+
+width: 64px; height: 64px;
+
+background: radial-gradient(circle at 30% 30%, #fbbf24 0%, #f59e0b 40%, #d97706 80%,
+#b45309 100%);
+
+top: 50%; left: 50%;
+
+transform: translate(-50%, -50%);
+
+box-shadow: 0 0 24px rgba(251, 191, 36, 0.3);
+
+animation: solar-pulse 6s ease-in-out infinite;
+
+position: absolute;
+
+overflow: hidden;
+
+z-index: 10;
+
+}
+
+.sun::before {
+
+content: '';
+
+position: absolute;
+
+top: 10%; left: 15%;
+
+width: 20px; height: 20px;
+
+background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);
+
+border-radius: 50%;
+
+animation: solar-spot 8s linear infinite;
+
+}
+
+@keyframes solar-pulse {
+
+0%, 100% {
+
+box-shadow: 0 0 24px rgba(251, 191, 36, 0.3);
+
+transform: translate(-50%, -50%) scale(1);
+
+}
+
+50% {
+
+box-shadow: 0 0 32px rgba(251, 191, 36, 0.4);
+
+transform: translate(-50%, -50%) scale(1.02);
+
+}
+
+}
+
+@keyframes solar-spot {
+
+0% { transform: rotate(0deg) translateX(30px) rotate(0deg); }
+
+100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
+
+}
+
+.earth {
+
+width: 50px; height: 50px;
+
+background: radial-gradient(circle at 30% 30%, #60a5fa 0%, #3b82f6 30%, #1e40af 60%,
+#1e3a8a 100%);
+
+top: -25px; right: -25px;
+
+box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+
+position: absolute;
+
+overflow: hidden;
+
+}
+
+.earth::before {
+
+content: '';
+
+position: absolute;
+
+top: 20%; left: 10%;
+
+width: 15px; height: 12px;
+
+background: #22c55e;
+
+border-radius: 50% 30% 60% 40%;
+
+opacity: 0.8;
+
+}
+
+.earth::after {
+
+content: '';
+
+position: absolute;
+
+bottom: 25%; right: 15%;
+
+width: 12px; height: 10px;
+
+background: #16a34a;
+
+border-radius: 40% 60% 30% 50%;
+
+opacity: 0.7;
+
+}
+
+.earth-atmosphere {
+
+position: absolute;
+
+width: 55px; height: 55px;
+
+border: 2px solid rgba(96, 165, 250, 0.3);
+
+border-radius: 50%;
+
+top: -27.5px; right: -27.5px;
+
+animation: atmosphere-glow 3s ease-in-out infinite alternate;
+
+z-index: -1;
+
+}
+
+@keyframes atmosphere-glow {
+
+0% { box-shadow: 0 0 10px rgba(96, 165, 250, 0.2); }
+
+100% { box-shadow: 0 0 20px rgba(96, 165, 250, 0.4); }
+
+}
+
+.mars {
+
+width: 42px; height: 42px;
+
+background: radial-gradient(circle at 25% 25%, #f87171 0%, #dc2626 40%, #991b1b 80%,
+#7f1d1d 100%);
+
+top: -21px; right: -21px;
+
+box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);
+
+position: absolute;
+
+overflow: hidden;
+
+}
+
+.mars::before {
+
+content: '';
+
+position: absolute;
+
+top: 30%; left: 20%;
+
+width: 8px; height: 8px;
+
+background: #450a0a;
+
+border-radius: 50%;
+
+box-shadow: 15px 5px 0 2px #450a0a, 8px 15px 0 1px #450a0a;
+
+}
+
+.jupiter {
+
+width: 70px;
+
+height: 70px;
+
+background:
+
+linear-gradient(0deg, transparent 0%, rgba(217, 119, 6, 0.3) 20%, transparent 25%),
+
+linear-gradient(0deg, transparent 35%, rgba(146, 64, 14, 0.4) 40%, transparent 45%),
+
+linear-gradient(0deg, transparent 55%, rgba(217, 119, 6, 0.2) 60%, transparent 65%),
+
+linear-gradient(0deg, transparent 75%, rgba(146, 64, 14, 0.3) 80%, transparent 85%),
+
+radial-gradient(circle at 30% 30%, #fbbf24 0%, #f59e0b 40%, #d97706 70%, #92400e
+100%);
+
+top: -35px;
+
+right: -35px;
+
+box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+
+position: absolute;
+
+overflow: hidden;
+
+}
+
+.jupiter::before {
+
+content: '';
+
+position: absolute;
+
+top: 35%;
+
+left: 60%;
+
+width: 20px;
+
+height: 15px;
+
+background: radial-gradient(ellipse, #dc2626 0%, #991b1b 100%);
+
+border-radius: 50%;
+
+animation: great-red-spot 15s linear infinite;
+
+}
+
+@keyframes great-red-spot {
+
+0% { transform: rotate(0deg) translateX(25px) rotate(0deg); }
+
+100% { transform: rotate(360deg) translateX(25px) rotate(-360deg); }
+
+}
+
+.saturn {
+
+width: 60px;
+
+height: 60px;
+
+background: radial-gradient(circle at 30% 30%, #fde047 0%, #eab308 50%, #ca8a04 100%);
+
+top: -30px;
+
+right: -30px;
+
+box-shadow: 0 0 25px rgba(234, 179, 8, 0.4);
+
+position: absolute;
+
+}
+
+.saturn::before {
+
+content: '';
+
+position: absolute;
+
+top: 50%;
+
+left: 50%;
+
+width: 100px;
+
+height: 100px;
+
+border: 3px solid rgba(234, 179, 8, 0.6);
+
+border-radius: 50%;
+
+transform: translate(-50%, -50%) rotateX(75deg);
+
+box-shadow:
+
+0 0 0 2px rgba(234, 179, 8, 0.3),
+
+0 0 0 6px rgba(234, 179, 8, 0.2);
+
+}
+
+.saturn::after {
+
+content: '';
+
+position: absolute;
+
+top: 50%;
+
+left: 50%;
+
+width: 120px;
+
+height: 120px;
+
+border: 2px solid rgba(234, 179, 8, 0.3);
+
+border-radius: 50%;
+
+transform: translate(-50%, -50%) rotateX(75deg);
+
+}
+
+.venus {
+
+width: 46px;
+
+height: 46px;
+
+background: radial-gradient(circle at 25% 25%, #fde047 0%, #eab308 60%, #ca8a04 100%);
+
+top: -23px;
+
+right: -23px;
+
+box-shadow: 0 0 18px rgba(234, 179, 8, 0.5);
+
+position: absolute;
+
+overflow: hidden;
+
+}
+
+.venus::before {
+
+content: '';
+
+position: absolute;
+
+top: 0;
+
+left: 0;
+
+width: 100%;
+
+height: 100%;
+
+background:
+
+linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%),
+
+linear-gradient(-45deg, transparent 40%, rgba(255, 255, 255, 0.05) 60%, transparent 80%);
+
+border-radius: 50%;
+
+animation: venus-atmosphere 8s linear infinite;
+
+}
+
+@keyframes venus-atmosphere {
+
+0% { transform: rotate(0deg); }
+
+100% { transform: rotate(360deg); }
+
+}
+
+.mercury {
+
+width: 40px;
+
+height: 40px;
+
+background: radial-gradient(circle at 30% 30%, #a3a3a3 0%, #737373 50%, #525252 100%);
+
+top: -20px;
+
+right: -20px;
+
+box-shadow: 0 0 12px rgba(115, 115, 115, 0.4);
+
+position: absolute;
+
+overflow: hidden;
+
+}
+
+.mercury::before {
+
+content: '';
+
+position: absolute;
+
+top: 25%;
+
+left: 20%;
+
+width: 4px;
+
+height: 4px;
+
+background: #404040;
+
+border-radius: 50%;
+
+box-shadow:
+
+8px 2px 0 1px #404040,
+
+4px 8px 0 1px #404040,
+
+10px 10px 0 0.5px #404040;
+
+}
+
+.uranus {
+
+width: 55px;
+
+height: 55px;
+
+background: radial-gradient(circle at 30% 30%, #06b6d4 0%, #0891b2 50%, #0e7490 100%);
+
+top: -27.5px;
+
+right: -27.5px;
+
+box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+
+position: absolute;
+
+overflow: hidden;
+
+}
+
+.uranus::before {
+
+content: '';
+
+position: absolute;
+
+top: 50%;
+
+left: 50%;
+
+width: 70px;
+
+height: 70px;
+
+border: 2px solid rgba(6, 182, 212, 0.4);
+
+border-radius: 50%;
+
+transform: translate(-50%, -50%) rotateX(85deg);
+
+box-shadow:
+
+0 0 0 1px rgba(6, 182, 212, 0.2),
+
+0 0 0 4px rgba(6, 182, 212, 0.1);
+
+}
+
+.uranus::after {
+
+content: '';
+
+position: absolute;
+
+top: 50%;
+
+left: 50%;
+
+width: 90px;
+
+height: 90px;
+
+border: 1px solid rgba(6, 182, 212, 0.2);
+
+border-radius: 50%;
+
+transform: translate(-50%, -50%) rotateX(85deg);
+
+}
+
+.neptune {
+
+width: 52px;
+
+height: 52px;
+
+background: radial-gradient(circle at 30% 30%, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);
+
+top: -26px;
+
+right: -26px;
+
+box-shadow: 0 0 18px rgba(59, 130, 246, 0.4);
+
+position: absolute;
+
+overflow: hidden;
+
+}
+
+.neptune::before {
+
+content: '';
+
+position: absolute;
+
+top: 20%;
+
+left: 15%;
+
+width: 12px;
+
+height: 8px;
+
+background: rgba(255, 255, 255, 0.3);
+
+border-radius: 50%;
+
+animation: neptune-storm 12s linear infinite;
+
+}
+
+@keyframes neptune-storm {
+
+0% { transform: rotate(0deg) translateX(15px) rotate(0deg); opacity: 0.3; }
+
+50% { opacity: 0.6; }
+
+100% { transform: rotate(360deg) translateX(15px) rotate(-360deg); opacity: 0.3; }
+
+}
+
+.asteroid-belt {
+
+position: absolute;
+
+top: 50%;
+
+left: 50%;
+
+transform: translate(-50%, -50%);
+
+width: 600px;
+
+height: 600px;
+
+border-radius: 50%;
+
+}
+
+.asteroid {
+
+position: absolute;
+
+width: 1px;
+
+height: 1px;
+
+background: #64748b;
+
+border-radius: 50%;
+
+opacity: 0.3;
+
+animation: asteroid-orbit 120s linear infinite;
+
+}
+
+@keyframes asteroid-orbit {
+
+0% { transform: rotate(0deg) translateX(300px) rotate(0deg); }
+
+100% { transform: rotate(360deg) translateX(300px) rotate(-360deg); }
+
+}
+
+.planet-info {
+
+position: absolute;
+
+background: rgba(15, 23, 42, 0.9);
+
+backdrop-filter: blur(10px);
+
+border: 1px solid rgba(148, 163, 184, 0.2);
+
+border-radius: 8px;
+
+padding: 8px 12px;
+
+font-size: 0.75rem;
+
+color: #e2e8f0;
+
+opacity: 0;
+
+transition: opacity 0.3s ease;
+
+pointer-events: none;
+
+z-index: 10;
+
+white-space: nowrap;
+
+}
+
+.celestial-body:hover .planet-info {
+
+opacity: 1;
+
+}
+
+.sun .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.earth .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.mars .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.jupiter .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.saturn .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.venus .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.mercury .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.uranus .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.neptune .planet-info {
+
+top: -40px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+}
+
+.control-panel {
+
+position: absolute;
+
+bottom: 0;
+
+left: 0;
+
+right: 0;
+
+background: rgba(15, 23, 42, 0.98);
+
+backdrop-filter: blur(20px);
+
+border-top: 1px solid rgba(148, 163, 184, 0.1);
+
+padding: 32px 48px;
+
+z-index: 50;
+
+box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+
+}
+
+.control-content {
+
+max-width: 1400px;
+
+margin: 0 auto;
+
+display: grid;
+
+grid-template-columns: 1fr auto 1fr;
+
+gap: 40px;
+
+align-items: center;
+
+}
+
+.mission-info {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 10px;
+
+}
+
+.mission-title {
+
+font-size: 1rem;
+
+font-weight: 500;
+
+color: #f8fafc;
+
+letter-spacing: -0.025em;
+
+}
+
+.mission-details {
+
+font-size: 0.875rem;
+
+color: #94a3b8;
+
+line-height: 1.5;
+
+}
+
+.launch-system {
+
+display: flex;
+
+flex-direction: column;
+
+align-items: center;
+
+gap: 20px;
+
+}
+
+.rocket-container {
+
+position: relative;
+
+width: 80px;
+
+height: 160px;
+
+}
+
+.rocket {
+
+width: 100%;
+
+height: 100%;
+
+transition: all 4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+transform-origin: center bottom;
+
+cursor: pointer;
+
+}
+
+.rocket:hover:not(.launched) {
+
+transform: translateY(-5px) scale(1.02);
+
+filter: drop-shadow(0 8px 25px rgba(59, 130, 246, 0.4));
+
+}
+
+.rocket:hover:not(.launched) .rocket-body {
+
+box-shadow:
+
+inset 2px 0 8px rgba(255,255,255,0.4),
+
+inset -2px 0 8px rgba(0,0,0,0.2),
+
+0 4px 30px rgba(59, 130, 246, 0.3);
+
+}
+
+.rocket:hover:not(.launched) .rocket-nose {
+
+box-shadow:
+
+inset 1px 1px 4px rgba(255,255,255,0.5),
+
+inset -1px -1px 4px rgba(0,0,0,0.3),
+
+0 2px 15px rgba(59, 130, 246, 0.4);
+
+}
+
+.rocket.launched {
+
+animation: interplanetary-journey 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+
+}
+
+@keyframes interplanetary-journey {
+
+0% {
+
+transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+
+}
+
+12% {
+
+transform: translateY(-150px) translateX(200px) scale(0.9) rotate(15deg);
+
+}
+
+25% {
+
+transform: translateY(-250px) translateX(350px) scale(0.8) rotate(30deg);
+
+}
+
+37% {
+
+transform: translateY(-200px) translateX(150px) scale(0.7) rotate(45deg);
+
+}
+
+50% {
+
+transform: translateY(-300px) translateX(-50px) scale(0.6) rotate(60deg);
+
+}
+
+62% {
+
+transform: translateY(-400px) translateX(-200px) scale(0.5) rotate(75deg);
+
+}
+
+75% {
+
+transform: translateY(-350px) translateX(-400px) scale(0.4) rotate(90deg);
+
+}
+
+87% {
+
+transform: translateY(-500px) translateX(-300px) scale(0.3) rotate(105deg);
+
+}
+
+100% {
+
+transform: translateY(-800px) translateX(-100px) scale(0.2) rotate(120deg);
+
+}
+
+}
+
+.rocket-body {
+
+width: 32px;
+
+height: 100px;
+
+background: linear-gradient(to bottom, #e2e8f0 0%, #cbd5e1 100%);
+
+margin: 0 auto;
+
+border-radius: 2px;
+
+position: relative;
+
+border: 1px solid #94a3b8;
+
+}
+
+.rocket-body::before {
+
+content: '';
+
+position: absolute;
+
+top: 8px;
+
+left: 4px;
+
+right: 4px;
+
+height: 2px;
+
+background: #475569;
+
+border-radius: 1px;
+
+}
+
+.rocket-body::after {
+
+content: '';
+
+position: absolute;
+
+bottom: 8px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 20px;
+
+height: 12px;
+
+background: #64748b;
+
+border-radius: 2px;
+
+border: 1px solid #475569;
+
+}
+
+.rocket-nose {
+
+width: 32px;
+
+height: 40px;
+
+background: #94a3b8;
+
+margin: 0 auto;
+
+clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+
+position: relative;
+
+border: 1px solid #64748b;
+
+}
+
+.rocket-window {
+
+position: absolute;
+
+top: 15px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 8px;
+
+height: 8px;
+
+background: #475569;
+
+border-radius: 1px;
+
+border: 1px solid #334155;
+
+}
+
+.rocket-details {
+
+position: absolute;
+
+top: 30px;
+
+left: 4px;
+
+right: 4px;
+
+height: 50px;
+
+background: #f1f5f9;
+
+border: 1px solid #cbd5e1;
+
+}
+
+.rocket-details::before {
+
+content: '';
+
+position: absolute;
+
+top: 10px;
+
+left: 4px;
+
+right: 4px;
+
+height: 1px;
+
+background: #64748b;
+
+}
+
+.rocket-details::after {
+
+content: '';
+
+position: absolute;
+
+bottom: 10px;
+
+left: 4px;
+
+right: 4px;
+
+height: 1px;
+
+background: #64748b;
+
+}
+
+.rocket-fins {
+
+position: absolute;
+
+bottom: -15px;
+
+left: -12px;
+
+right: -12px;
+
+height: 25px;
+
+}
+
+.fin {
+
+position: absolute;
+
+bottom: 0;
+
+background: #94a3b8;
+
+border: 1px solid #64748b;
+
+}
+
+.fin-left {
+
+left: 0;
+
+width: 16px;
+
+height: 20px;
+
+clip-path: polygon(0% 100%, 100% 100%, 70% 0%);
+
+}
+
+.fin-right {
+
+right: 0;
+
+width: 16px;
+
+height: 20px;
+
+clip-path: polygon(0% 100%, 100% 100%, 30% 0%);
+
+}
+
+.propulsion {
+
+position: absolute;
+
+bottom: -30px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 20px;
+
+height: 30px;
+
+opacity: 0;
+
+transition: opacity 0.3s;
+
+}
+
+.rocket.launched .propulsion {
+
+opacity: 1;
+
+}
+
+.flame {
+
+position: absolute;
+
+border-radius: 2px;
+
+}
+
+.flame-1 {
+
+width: 8px;
+
+height: 25px;
+
+background: linear-gradient(to top, #dc2626 0%, #f59e0b 100%);
+
+left: 6px;
+
+}
+
+.flame-2 {
+
+width: 6px;
+
+height: 20px;
+
+background: linear-gradient(to top, #991b1b 0%, #dc2626 100%);
+
+left: 7px;
+
+}
+
+.flame-3 {
+
+display: none;
+
+}
+
+.flame-4 {
+
+display: none;
+
+}
+
+.exhaust-glow {
+
+position: absolute;
+
+bottom: -5px;
+
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 16px;
+
+height: 16px;
+
+background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 100%);
+
+border-radius: 50%;
+
+}
+
+@keyframes rocket-shake {
+
+0%, 100% { transform: translateX(0); }
+
+10% { transform: translateX(-2px) rotate(-0.5deg); }
+
+20% { transform: translateX(2px) rotate(0.5deg); }
+
+30% { transform: translateX(-1px) rotate(-0.3deg); }
+
+40% { transform: translateX(1px) rotate(0.3deg); }
+
+50% { transform: translateX(-2px) rotate(-0.4deg); }
+
+60% { transform: translateX(2px) rotate(0.4deg); }
+
+70% { transform: translateX(-1px) rotate(-0.2deg); }
+
+80% { transform: translateX(1px) rotate(0.2deg); }
+
+90% { transform: translateX(-1px) rotate(-0.1deg); }
+
+}
+
+.launch-button {
+
+background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+
+color: white;
+
+border: none;
+
+padding: 12px 24px;
+
+font-size: 0.875rem;
+
+font-weight: 500;
+
+border-radius: 6px;
+
+cursor: pointer;
+
+box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+
+transition: all 0.2s ease;
+
+letter-spacing: -0.025em;
+
+position: relative;
+
+overflow: hidden;
+
+}
+
+.launch-button::before {
+
+content: '';
+
+position: absolute;
+
+top: 0;
+
+left: -100%;
+
+width: 100%;
+
+height: 100%;
+
+background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+
+transition: left 0.5s;
+
+}
+
+.launch-button:hover::before {
+
+left: 100%;
+
+}
+
+.launch-button:hover {
+
+transform: translateY(-1px);
+
+box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+
+}
+
+.launch-button:active {
+
+transform: translateY(0);
+
+}
+
+.launch-button.hidden {
+
+opacity: 0;
+
+pointer-events: none;
+
+}
+
+.launch-button:disabled {
+
+background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+
+cursor: not-allowed;
+
+opacity: 0.6;
+
+}
+
+.launch-button:disabled:hover {
+
+transform: none;
+
+box-shadow: 0 2px 8px rgba(100, 116, 139, 0.2);
+
+}
+
+.system-stats {
+
+display: flex;
+
+flex-direction: column;
+
+gap: 10px;
+
+text-align: right;
+
+}
+
+.stat-item {
+
+display: flex;
+
+justify-content: space-between;
+
+align-items: center;
+
+gap: 15px;
+
+font-size: 0.875rem;
+
+}
+
+.stat-label {
+
+color: #94a3b8;
+
+font-weight: 400;
+
+}
+
+.stat-value {
+
+color: #22c55e;
+
+font-weight: 500;
+
+font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+
+}
+
+.message-delivery {
+
+position: absolute;
+
+top: 50%;
+
+left: 50%;
+
+transform: translate(-50%, -50%);
+
+background: rgba(15, 23, 42, 0.98);
+
+backdrop-filter: blur(24px);
+
+border: 1px solid rgba(148, 163, 184, 0.1);
+
+border-radius: 12px;
+
+padding: 40px 48px;
+
+text-align: center;
+
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+
+opacity: 0;
+
+scale: 0.95;
+
+transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+z-index: 200;
+
+max-width: 480px;
+
+}
+
+.message-delivery.show {
+
+opacity: 1;
+
+scale: 1;
+
+}
+
+.message-icon {
+
+width: 56px;
+
+height: 56px;
+
+background: linear-gradient(135deg, #3b82f6, #1e40af);
+
+border-radius: 8px;
+
+margin: 0 auto 20px;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+font-size: 1.5rem;
+
+}
+
+.message-title {
+
+font-size: 1.5rem;
+
+font-weight: 600;
+
+margin: 0 0 12px 0;
+
+color: #f8fafc;
+
+letter-spacing: -0.025em;
+
+}
+
+.message-subtitle {
+
+font-size: 1rem;
+
+color: #94a3b8;
+
+margin: 0 0 24px 0;
+
+line-height: 1.6;
+
+}
+
+.message-status {
+
+display: inline-flex;
+
+align-items: center;
+
+gap: 10px;
+
+background: rgba(34, 197, 94, 0.1);
+
+border: 1px solid rgba(34, 197, 94, 0.3);
+
+padding: 12px 20px;
+
+border-radius: 25px;
+
+color: #22c55e;
+
+font-weight: 600;
+
+}
+
+.particle-system {
+
+position: absolute;
+
+width: 100%;
+
+height: 100%;
+
+pointer-events: none;
+
+z-index: 150;
+
+}
+
+.particle {
+
+position: absolute;
+
+width: 4px;
+
+height: 4px;
+
+background: #3b82f6;
+
+border-radius: 50%;
+
+opacity: 0;
+
+animation: particle-burst 3s ease-out forwards;
+
+}
+
+@keyframes particle-burst {
+
+0% {
+
+opacity: 0;
+
+transform: scale(0) rotate(0deg);
+
+}
+
+20% {
+
+opacity: 1;
+
+transform: scale(1) rotate(90deg);
+
+}
+
+100% {
+
+opacity: 0;
+
+transform: scale(0) rotate(360deg) translateY(-100px);
+
+}
+
+}
+
+@keyframes flyby-particle {
+
+0% {
+
+opacity: 0;
+
+transform: scale(0);
+
+}
+
+30% {
+
+opacity: 1;
+
+transform: scale(1);
+
+}
+
+100% {
+
+opacity: 0;
+
+transform: scale(0) translateY(-40px);
+
+}
+
+}
+
+.trajectory-line {
+
+position: absolute;
+
+width: 2px;
+
+height: 0;
+
+background: linear-gradient(to top, transparent, #3b82f6, transparent);
+
+left: 50%;
+
+bottom: 200px;
+
+transform: translateX(-50%);
+
+opacity: 0;
+
+transition: all 2s ease-out;
+
+}
+
+.trajectory-line.active {
+
+height: 400px;
+
+opacity: 0.6;
+
+}
+
+@media (max-width: 768px) {
+
+.header {
+
+padding: 12px 16px;
+
+}
+
+.header-content {
+
+flex-direction: row;
+
+justify-content: space-between;
+
+gap: 10px;
+
+}
+
+.logo-text {
+
+font-size: 1rem;
+
+}
+
+.logo-icon {
+
+width: 28px;
+
+height: 28px;
+
+font-size: 14px;
+
+}
+
+.planet-selection-hint {
+
+top: 80px;
+
+left: 16px;
+
+right: 16px;
+
+transform: none;
+
+padding: 12px 16px;
+
+}
+
+.hint-text {
+
+font-size: 0.8rem;
+
+justify-content: center;
+
+}
+
+.control-panel {
+
+padding: 20px 16px;
+
+}
+
+.control-content {
+
+grid-template-columns: 1fr;
+
+gap: 20px;
+
+text-align: center;
+
+}
+
+.mission-info {
+
+order: 2;
+
+}
+
+.launch-system {
+
+order: 1;
+
+}
+
+.system-stats {
+
+order: 3;
+
+text-align: center;
+
+}
+
+.rocket-container {
+
+width: 60px;
+
+height: 120px;
+
+}
+
+.message-delivery {
+
+margin: 16px;
+
+padding: 32px 24px;
+
+}
+
+.message-title {
+
+font-size: 1.25rem;
+
+}
+
+.message-subtitle {
+
+font-size: 0.9rem;
+
+}
+
+.celestial-body {
+
+min-width: 50px;
+
+min-height: 50px;
+
+}
+
+.celestial-body:hover {
+
+transform: scale(1.4);
+
+}
+
+.celestial-body.selected {
+
+transform: scale(1.5);
+
+}
+
+.earth {
+
+width: 60px;
+
+height: 60px;
+
+top: -30px;
+
+right: -30px;
+
+}
+
+.mars {
+
+width: 50px;
+
+height: 50px;
+
+top: -25px;
+
+right: -25px;
+
+}
+
+.venus {
+
+width: 55px;
+
+height: 55px;
+
+top: -27.5px;
+
+right: -27.5px;
+
+}
+
+.mercury {
+
+width: 48px;
+
+height: 48px;
+
+top: -24px;
+
+right: -24px;
+
+}
+
+.jupiter {
+
+width: 80px;
+
+height: 80px;
+
+top: -40px;
+
+right: -40px;
+
+}
+
+.saturn {
+
+width: 70px;
+
+height: 70px;
+
+top: -35px;
+
+right: -35px;
+
+}
+
+.uranus {
+
+width: 65px;
+
+height: 65px;
+
+top: -32.5px;
+
+right: -32.5px;
+
+}
+
+.neptune {
+
+width: 62px;
+
+height: 62px;
+
+top: -31px;
+
+right: -31px;
+
+}
+
+.planet-info {
+
+font-size: 0.7rem;
+
+padding: 6px 10px;
+
+white-space: normal;
+
+max-width: 200px;
+
+text-align: center;
+
+}
+
+}
+
+@media (max-width: 480px) {
+
+.solar-system {
+
+transform: translate(-50%, -50%) scale(0.8);
+
+}
+
+.orbit {
+
+border-width: 0.5px;
+
+}
+
+.celestial-body {
+
+min-width: 45px;
+
+min-height: 45px;
+
+}
+
+.message-delivery {
+
+margin: 12px;
+
+padding: 24px 16px;
+
+}
+
+.hint-text {
+
+font-size: 0.75rem;
+
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
-<div style="page-break-before:always; page-break-after:always"><div><p>&lt;!DOCTYPE html&gt;<br/></p>
-<p>&lt;html lang=&quot;en&quot;&gt;<br/></p>
-<p>&lt;head&gt;<br/></p>
-<p>    &lt;meta charset=&quot;UTF-8&quot;&gt;<br/></p>
-<p>    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;<br/></p>
-<p>    &lt;title&gt;Stellar Communications | Mission: Khushi&lt;/title&gt;<br/></p>
-<p>    &lt;style&gt;<br/></p>
-<p>        * { box-sizing: border-box; }<br/></p>
-<p>        <br/></p>
-<p>        html, body {<br/></p>
-<p>            margin: 0;<br/></p>
-<p>            padding: 0;<br/></p>
-<p>            height: 100%;<br/></p>
-<p>            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);<br/></p>
-<p>            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>            color: #f8fafc;<br/></p>
-<p>        }<br/></p>
-<p>        .mission-control { position: relative; width: 100%; height: 100%; }<br/></p>
-<p>        .header {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 0; left: 0; right: 0;<br/></p>
-<p>            background: rgba(15, 23, 42, 0.98);<br/></p>
-<p>            backdrop-filter: blur(20px);<br/></p>
-<p>            border-bottom: 1px solid rgba(148, 163, 184, 0.1);</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            padding: 24px 48px;<br/></p>
-<p>            z-index: 100;<br/></p>
-<p>        }<br/></p>
-<p>        .header-content {<br/></p>
-<p>            display: flex;<br/></p>
-<p>            justify-content: space-between;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            max-width: 1400px;<br/></p>
-<p>            margin: 0 auto;<br/></p>
-<p>        }<br/></p>
-<p>        .logo {<br/></p>
-<p>            display: flex;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            gap: 15px;<br/></p>
-<p>        }<br/></p>
-<p>        .logo-icon {<br/></p>
-<p>            width: 36px; height: 36px;<br/></p>
-<p>            background: linear-gradient(135deg, #3b82f6, #1e40af);<br/></p>
-<p>            border-radius: 6px;<br/></p>
-<p>            display: flex;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            justify-content: center;<br/></p>
-<p>            font-size: 16px;<br/></p>
-<p>        }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        .logo-text {<br/></p>
-<p>            font-size: 1.25rem;<br/></p>
-<p>            font-weight: 500;<br/></p>
-<p>            letter-spacing: -0.025em;<br/></p>
-<p>        }<br/></p>
-<p>        .status-indicator {<br/></p>
-<p>            display: flex;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            gap: 8px;<br/></p>
-<p>            padding: 6px 14px;<br/></p>
-<p>            background: rgba(34, 197, 94, 0.08);<br/></p>
-<p>            border: 1px solid rgba(34, 197, 94, 0.2);<br/></p>
-<p>            border-radius: 6px;<br/></p>
-<p>            font-size: 0.875rem;<br/></p>
-<p>            font-weight: 500;<br/></p>
-<p>        }<br/></p>
-<p>        .status-dot {<br/></p>
-<p>            width: 8px; height: 8px;<br/></p>
-<p>            background: #22c55e;<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            animation: pulse 2s infinite;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        .planet-selection-hint {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 120px; left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>            background: rgba(15, 23, 42, 0.95);<br/></p>
-<p>            backdrop-filter: blur(20px);<br/></p>
-<p>            border: 1px solid rgba(148, 163, 184, 0.2);<br/></p>
-<p>            border-radius: 12px;<br/></p>
-<p>            padding: 16px 24px;<br/></p>
-<p>            z-index: 60;<br/></p>
-<p>            text-align: center;<br/></p>
-<p>            animation: hint-pulse 3s ease-in-out infinite;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes hint-pulse { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.6; } }<br/></p>
-<p>        .hint-text {<br/></p>
-<p>            font-size: 0.875rem;<br/></p>
-<p>            color: #94a3b8;<br/></p>
-<p>            margin: 0;<br/></p>
-<p>            display: flex;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            gap: 8px;<br/></p>
-<p>        }<br/></p>
-<p>        .space-field {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            position: absolute;<br/></p>
-<p>            top: 0; left: 0;<br/></p>
-<p>            width: 100%; height: 100%;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>        }<br/></p>
-<p>        .stars-layer { position: absolute; width: 100%; height: 100%; }<br/></p>
-<p>        .star {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            background: #e2e8f0;<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            animation: subtle-twinkle 4s ease-in-out infinite;<br/></p>
-<p>        }<br/></p>
-<p>        .star.bright {<br/></p>
-<p>            background: #f8fafc;<br/></p>
-<p>            box-shadow: 0 0 2px rgba(248, 250, 252, 0.5);<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes subtle-twinkle { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }<br/></p>
-<p>        .solar-system {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 50%; left: 50%;<br/></p>
-<p>            transform: translate(-50%, -50%);<br/></p>
-<p>            width: 100%; height: 100%;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        }<br/></p>
-<p>        .orbit {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            border: 1px solid rgba(148, 163, 184, 0.06);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            top: 50%; left: 50%;<br/></p>
-<p>            transform: translate(-50%, -50%);<br/></p>
-<p>        }<br/></p>
-<p>        .orbit-mercury { width: 200px; height: 200px; }<br/></p>
-<p>        .orbit-venus { width: 280px; height: 280px; }<br/></p>
-<p>        .orbit-earth { width: 360px; height: 360px; }<br/></p>
-<p>        .orbit-mars { width: 480px; height: 480px; }<br/></p>
-<p>        .orbit-jupiter { width: 720px; height: 720px; }<br/></p>
-<p>        .orbit-saturn { width: 900px; height: 900px; }<br/></p>
-<p>        .orbit-uranus { width: 1080px; height: 1080px; }<br/></p>
-<p>        .orbit-neptune { width: 1200px; height: 1200px; }<br/></p>
-<p>        .orbit-asteroid {<br/></p>
-<p>            width: 600px; height: 600px;<br/></p>
-<p>            border-style: dashed;<br/></p>
-<p>            border-color: rgba(148, 163, 184, 0.05);<br/></p>
-<p>        }<br/></p>
-<p>        .celestial-body {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            border-radius: 50%;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            top: 50%; left: 50%;<br/></p>
-<p>            cursor: pointer;<br/></p>
-<p>            transition: all 0.3s ease;<br/></p>
-<p>            min-width: 40px; min-height: 40px;<br/></p>
-<p>            pointer-events: auto;<br/></p>
-<p>            z-index: 10;<br/></p>
-<p>        }<br/></p>
-<p>        .celestial-body:hover {<br/></p>
-<p>            transform: scale(1.2);<br/></p>
-<p>            filter: brightness(1.3);<br/></p>
-<p>            z-index: 20;<br/></p>
-<p>        }<br/></p>
-<p>        .celestial-body.selected {<br/></p>
-<p>            animation: planet-selected 2s ease-in-out infinite;<br/></p>
-<p>            transform: scale(1.3);<br/></p>
-<p>            filter: brightness(1.4);<br/></p>
-<p>            z-index: 25;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes planet-selected {<br/></p>
-<p>            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6), 0 0 40px rgba(59, 130, 246, 0.3); }<br/></p>
-<p>            50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.8), 0 0 60px rgba(59, 130, 246, 0.5); }<br/></p>
-<p>        }<br/></p>
-<p>        .planet-orbit {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            position: absolute;<br/></p>
-<p>            top: 50%; left: 50%;<br/></p>
-<p>            transform: translate(-50%, -50%);<br/></p>
-<p>            animation-timing-function: linear;<br/></p>
-<p>            animation-iteration-count: infinite;<br/></p>
-<p>            pointer-events: none;<br/></p>
-<p>            z-index: 15;<br/></p>
-<p>        }<br/></p>
-<p>        .mercury-orbit { width: 200px; height: 200px; animation: orbit 25s linear infinite; }<br/></p>
-<p>        .venus-orbit { width: 280px; height: 280px; animation: orbit 35s linear infinite; }<br/></p>
-<p>        .earth-orbit { width: 360px; height: 360px; animation: orbit 45s linear infinite; }<br/></p>
-<p>        .mars-orbit { width: 480px; height: 480px; animation: orbit 60s linear infinite; }<br/></p>
-<p>        .jupiter-orbit { width: 720px; height: 720px; animation: orbit 120s linear infinite; }<br/></p>
-<p>        .saturn-orbit { width: 900px; height: 900px; animation: orbit 150s linear infinite; }<br/></p>
-<p>        .uranus-orbit { width: 1080px; height: 1080px; animation: orbit 200s linear infinite; }<br/></p>
-<p>        .neptune-orbit { width: 1200px; height: 1200px; animation: orbit 300s linear infinite; }<br/></p>
-<p>        @keyframes orbit {<br/></p>
-<p>            0% { transform: translate(-50%, -50%) rotate(0deg); }<br/></p>
-<p>            100% { transform: translate(-50%, -50%) rotate(360deg); }<br/></p>
-<p>        }<br/></p>
-<p>        .sun {<br/></p>
-<p>            width: 64px; height: 64px;<br/></p>
-<p>            background: radial-gradient(circle at 30% 30%, #fbbf24 0%, #f59e0b 40%, #d97706 80%, <br/>#b45309 100%);<br/></p>
-<p>            top: 50%; left: 50%;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            transform: translate(-50%, -50%);<br/></p>
-<p>            box-shadow: 0 0 24px rgba(251, 191, 36, 0.3);<br/></p>
-<p>            animation: solar-pulse 6s ease-in-out infinite;<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>            z-index: 10;<br/></p>
-<p>        }<br/></p>
-<p>        .sun::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 10%; left: 15%;<br/></p>
-<p>            width: 20px; height: 20px;<br/></p>
-<p>            background: radial-gradient(circle, rgba(255, 255, 255, 0.8), transparent);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            animation: solar-spot 8s linear infinite;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes solar-pulse {<br/></p>
-<p>            0%, 100% { <br/></p>
-<p>                box-shadow: 0 0 24px rgba(251, 191, 36, 0.3);<br/></p>
-<p>                transform: translate(-50%, -50%) scale(1);<br/></p>
-<p>            }<br/></p>
-<p>            50% { <br/></p>
-<p>                box-shadow: 0 0 32px rgba(251, 191, 36, 0.4);<br/></p>
-<p>                transform: translate(-50%, -50%) scale(1.02);<br/></p>
-<p>            }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        }<br/></p>
-<p>        @keyframes solar-spot {<br/></p>
-<p>            0% { transform: rotate(0deg) translateX(30px) rotate(0deg); }<br/></p>
-<p>            100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }<br/></p>
-<p>        }<br/></p>
-<p>        .earth {<br/></p>
-<p>            width: 50px; height: 50px;<br/></p>
-<p>            background: radial-gradient(circle at 30% 30%, #60a5fa 0%, #3b82f6 30%, #1e40af 60%, <br/>#1e3a8a 100%);<br/></p>
-<p>            top: -25px; right: -25px;<br/></p>
-<p>            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>        }<br/></p>
-<p>        .earth::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 20%; left: 10%;<br/></p>
-<p>            width: 15px; height: 12px;<br/></p>
-<p>            background: #22c55e;<br/></p>
-<p>            border-radius: 50% 30% 60% 40%;<br/></p>
-<p>            opacity: 0.8;<br/></p>
-<p>        }<br/></p>
-<p>        .earth::after {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            bottom: 25%; right: 15%;<br/></p>
-<p>            width: 12px; height: 10px;<br/></p>
-<p>            background: #16a34a;<br/></p>
-<p>            border-radius: 40% 60% 30% 50%;<br/></p>
-<p>            opacity: 0.7;<br/></p>
-<p>        }<br/></p>
-<p>        .earth-atmosphere {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            width: 55px; height: 55px;<br/></p>
-<p>            border: 2px solid rgba(96, 165, 250, 0.3);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            top: -27.5px; right: -27.5px;<br/></p>
-<p>            animation: atmosphere-glow 3s ease-in-out infinite alternate;<br/></p>
-<p>            z-index: -1;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes atmosphere-glow {<br/></p>
-<p>            0% { box-shadow: 0 0 10px rgba(96, 165, 250, 0.2); }<br/></p>
-<p>            100% { box-shadow: 0 0 20px rgba(96, 165, 250, 0.4); }<br/></p>
-<p>        }<br/></p>
-<p>        .mars {<br/></p>
-<p>            width: 42px; height: 42px;<br/></p>
-<p>            background: radial-gradient(circle at 25% 25%, #f87171 0%, #dc2626 40%, #991b1b 80%, <br/>#7f1d1d 100%);</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            top: -21px; right: -21px;<br/></p>
-<p>            box-shadow: 0 0 15px rgba(220, 38, 38, 0.4);<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>        }<br/></p>
-<p>        .mars::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 30%; left: 20%;<br/></p>
-<p>            width: 8px; height: 8px;<br/></p>
-<p>            background: #450a0a;<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            box-shadow: 15px 5px 0 2px #450a0a, 8px 15px 0 1px #450a0a;<br/></p>
-<p>        }<br/></p>
-<p>        .jupiter {<br/></p>
-<p>            width: 70px;<br/></p>
-<p>            height: 70px;<br/></p>
-<p>            background: <br/></p>
-<p>                linear-gradient(0deg, transparent 0%, rgba(217, 119, 6, 0.3) 20%, transparent 25%),<br/></p>
-<p>                linear-gradient(0deg, transparent 35%, rgba(146, 64, 14, 0.4) 40%, transparent 45%),<br/></p>
-<p>                linear-gradient(0deg, transparent 55%, rgba(217, 119, 6, 0.2) 60%, transparent 65%),<br/></p>
-<p>                linear-gradient(0deg, transparent 75%, rgba(146, 64, 14, 0.3) 80%, transparent 85%),<br/></p>
-<p>                radial-gradient(circle at 30% 30%, #fbbf24 0%, #f59e0b 40%, #d97706 70%, #92400e <br/>100%);<br/></p>
-<p>            top: -35px;<br/></p>
-<p>            right: -35px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>        }<br/></p>
-<p>        .jupiter::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 35%;<br/></p>
-<p>            left: 60%;<br/></p>
-<p>            width: 20px;<br/></p>
-<p>            height: 15px;<br/></p>
-<p>            background: radial-gradient(ellipse, #dc2626 0%, #991b1b 100%);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            animation: great-red-spot 15s linear infinite;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes great-red-spot {<br/></p>
-<p>            0% { transform: rotate(0deg) translateX(25px) rotate(0deg); }<br/></p>
-<p>            100% { transform: rotate(360deg) translateX(25px) rotate(-360deg); }<br/></p>
-<p>        }<br/></p>
-<p>        .saturn {<br/></p>
-<p>            width: 60px;<br/></p>
-<p>            height: 60px;<br/></p>
-<p>            background: radial-gradient(circle at 30% 30%, #fde047 0%, #eab308 50%, #ca8a04 100%);<br/></p>
-<p>            top: -30px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            right: -30px;<br/></p>
-<p>            box-shadow: 0 0 25px rgba(234, 179, 8, 0.4);<br/></p>
-<p>            position: absolute;<br/></p>
-<p>        }<br/></p>
-<p>        .saturn::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 50%;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            width: 100px;<br/></p>
-<p>            height: 100px;<br/></p>
-<p>            border: 3px solid rgba(234, 179, 8, 0.6);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            transform: translate(-50%, -50%) rotateX(75deg);<br/></p>
-<p>            box-shadow: <br/></p>
-<p>                0 0 0 2px rgba(234, 179, 8, 0.3),<br/></p>
-<p>                0 0 0 6px rgba(234, 179, 8, 0.2);<br/></p>
-<p>        }<br/></p>
-<p>        .saturn::after {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 50%;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            width: 120px;<br/></p>
-<p>            height: 120px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            border: 2px solid rgba(234, 179, 8, 0.3);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            transform: translate(-50%, -50%) rotateX(75deg);<br/></p>
-<p>        }<br/></p>
-<p>        .venus {<br/></p>
-<p>            width: 46px;<br/></p>
-<p>            height: 46px;<br/></p>
-<p>            background: radial-gradient(circle at 25% 25%, #fde047 0%, #eab308 60%, #ca8a04 100%);<br/></p>
-<p>            top: -23px;<br/></p>
-<p>            right: -23px;<br/></p>
-<p>            box-shadow: 0 0 18px rgba(234, 179, 8, 0.5);<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>        }<br/></p>
-<p>        .venus::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 0;<br/></p>
-<p>            left: 0;<br/></p>
-<p>            width: 100%;<br/></p>
-<p>            height: 100%;<br/></p>
-<p>            background: <br/></p>
-<p>                linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%),<br/></p>
-<p>                linear-gradient(-45deg, transparent 40%, rgba(255, 255, 255, 0.05) 60%, transparent 80%);<br/></p>
-<p>            border-radius: 50%;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            animation: venus-atmosphere 8s linear infinite;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes venus-atmosphere {<br/></p>
-<p>            0% { transform: rotate(0deg); }<br/></p>
-<p>            100% { transform: rotate(360deg); }<br/></p>
-<p>        }<br/></p>
-<p>        .mercury {<br/></p>
-<p>            width: 40px;<br/></p>
-<p>            height: 40px;<br/></p>
-<p>            background: radial-gradient(circle at 30% 30%, #a3a3a3 0%, #737373 50%, #525252 100%);<br/></p>
-<p>            top: -20px;<br/></p>
-<p>            right: -20px;<br/></p>
-<p>            box-shadow: 0 0 12px rgba(115, 115, 115, 0.4);<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>        }<br/></p>
-<p>        .mercury::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 25%;<br/></p>
-<p>            left: 20%;<br/></p>
-<p>            width: 4px;<br/></p>
-<p>            height: 4px;<br/></p>
-<p>            background: #404040;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            border-radius: 50%;<br/></p>
-<p>            box-shadow: <br/></p>
-<p>                8px 2px 0 1px #404040,<br/></p>
-<p>                4px 8px 0 1px #404040,<br/></p>
-<p>                10px 10px 0 0.5px #404040;<br/></p>
-<p>        }<br/></p>
-<p>        .uranus {<br/></p>
-<p>            width: 55px;<br/></p>
-<p>            height: 55px;<br/></p>
-<p>            background: radial-gradient(circle at 30% 30%, #06b6d4 0%, #0891b2 50%, #0e7490 100%);<br/></p>
-<p>            top: -27.5px;<br/></p>
-<p>            right: -27.5px;<br/></p>
-<p>            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>        }<br/></p>
-<p>        .uranus::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 50%;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            width: 70px;<br/></p>
-<p>            height: 70px;<br/></p>
-<p>            border: 2px solid rgba(6, 182, 212, 0.4);<br/></p>
-<p>            border-radius: 50%;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            transform: translate(-50%, -50%) rotateX(85deg);<br/></p>
-<p>            box-shadow: <br/></p>
-<p>                0 0 0 1px rgba(6, 182, 212, 0.2),<br/></p>
-<p>                0 0 0 4px rgba(6, 182, 212, 0.1);<br/></p>
-<p>        }<br/></p>
-<p>        .uranus::after {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 50%;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            width: 90px;<br/></p>
-<p>            height: 90px;<br/></p>
-<p>            border: 1px solid rgba(6, 182, 212, 0.2);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            transform: translate(-50%, -50%) rotateX(85deg);<br/></p>
-<p>        }<br/></p>
-<p>        .neptune {<br/></p>
-<p>            width: 52px;<br/></p>
-<p>            height: 52px;<br/></p>
-<p>            background: radial-gradient(circle at 30% 30%, #3b82f6 0%, #1d4ed8 50%, #1e40af 100%);<br/></p>
-<p>            top: -26px;<br/></p>
-<p>            right: -26px;<br/></p>
-<p>            box-shadow: 0 0 18px rgba(59, 130, 246, 0.4);<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            overflow: hidden;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        }<br/></p>
-<p>        .neptune::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 20%;<br/></p>
-<p>            left: 15%;<br/></p>
-<p>            width: 12px;<br/></p>
-<p>            height: 8px;<br/></p>
-<p>            background: rgba(255, 255, 255, 0.3);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            animation: neptune-storm 12s linear infinite;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes neptune-storm {<br/></p>
-<p>            0% { transform: rotate(0deg) translateX(15px) rotate(0deg); opacity: 0.3; }<br/></p>
-<p>            50% { opacity: 0.6; }<br/></p>
-<p>            100% { transform: rotate(360deg) translateX(15px) rotate(-360deg); opacity: 0.3; }<br/></p>
-<p>        }<br/></p>
-<p>        .asteroid-belt {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 50%;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translate(-50%, -50%);<br/></p>
-<p>            width: 600px;<br/></p>
-<p>            height: 600px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            border-radius: 50%;<br/></p>
-<p>        }<br/></p>
-<p>        .asteroid {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            width: 1px;<br/></p>
-<p>            height: 1px;<br/></p>
-<p>            background: #64748b;<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            opacity: 0.3;<br/></p>
-<p>            animation: asteroid-orbit 120s linear infinite;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes asteroid-orbit {<br/></p>
-<p>            0% { transform: rotate(0deg) translateX(300px) rotate(0deg); }<br/></p>
-<p>            100% { transform: rotate(360deg) translateX(300px) rotate(-360deg); }<br/></p>
-<p>        }<br/></p>
-<p>        .planet-info {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            background: rgba(15, 23, 42, 0.9);<br/></p>
-<p>            backdrop-filter: blur(10px);<br/></p>
-<p>            border: 1px solid rgba(148, 163, 184, 0.2);<br/></p>
-<p>            border-radius: 8px;<br/></p>
-<p>            padding: 8px 12px;<br/></p>
-<p>            font-size: 0.75rem;<br/></p>
-<p>            color: #e2e8f0;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            opacity: 0;<br/></p>
-<p>            transition: opacity 0.3s ease;<br/></p>
-<p>            pointer-events: none;<br/></p>
-<p>            z-index: 10;<br/></p>
-<p>            white-space: nowrap;<br/></p>
-<p>        }<br/></p>
-<p>        .celestial-body:hover .planet-info {<br/></p>
-<p>            opacity: 1;<br/></p>
-<p>        }<br/></p>
-<p>        .sun .planet-info {<br/></p>
-<p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>        }<br/></p>
-<p>        .earth .planet-info {<br/></p>
-<p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>        }<br/></p>
-<p>        .mars .planet-info {<br/></p>
-<p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        }<br/></p>
-<p>        .jupiter .planet-info {<br/></p>
-<p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>        }<br/></p>
-<p>        .saturn .planet-info {<br/></p>
-<p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>        }<br/></p>
-<p>        .venus .planet-info {<br/></p>
-<p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>        }<br/></p>
-<p>        .mercury .planet-info {<br/></p>
-<p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>        }<br/></p>
-<p>        .uranus .planet-info {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>        }<br/></p>
-<p>        .neptune .planet-info {<br/></p>
-<p>            top: -40px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>        }<br/></p>
-<p>        .control-panel {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            bottom: 0;<br/></p>
-<p>            left: 0;<br/></p>
-<p>            right: 0;<br/></p>
-<p>            background: rgba(15, 23, 42, 0.98);<br/></p>
-<p>            backdrop-filter: blur(20px);<br/></p>
-<p>            border-top: 1px solid rgba(148, 163, 184, 0.1);<br/></p>
-<p>            padding: 32px 48px;<br/></p>
-<p>            z-index: 50;<br/></p>
-<p>            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);<br/></p>
-<p>        }<br/></p>
-<p>        .control-content {<br/></p>
-<p>            max-width: 1400px;<br/></p>
-<p>            margin: 0 auto;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            display: grid;<br/></p>
-<p>            grid-template-columns: 1fr auto 1fr;<br/></p>
-<p>            gap: 40px;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>        }<br/></p>
-<p>        .mission-info {<br/></p>
-<p>            display: flex;<br/></p>
-<p>            flex-direction: column;<br/></p>
-<p>            gap: 10px;<br/></p>
-<p>        }<br/></p>
-<p>        .mission-title {<br/></p>
-<p>            font-size: 1rem;<br/></p>
-<p>            font-weight: 500;<br/></p>
-<p>            color: #f8fafc;<br/></p>
-<p>            letter-spacing: -0.025em;<br/></p>
-<p>        }<br/></p>
-<p>        .mission-details {<br/></p>
-<p>            font-size: 0.875rem;<br/></p>
-<p>            color: #94a3b8;<br/></p>
-<p>            line-height: 1.5;<br/></p>
-<p>        }<br/></p>
-<p>        .launch-system {<br/></p>
-<p>            display: flex;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            flex-direction: column;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            gap: 20px;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-container {<br/></p>
-<p>            position: relative;<br/></p>
-<p>            width: 80px;<br/></p>
-<p>            height: 160px;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket {<br/></p>
-<p>            width: 100%;<br/></p>
-<p>            height: 100%;<br/></p>
-<p>            transition: all 4s cubic-bezier(0.25, 0.46, 0.45, 0.94);<br/></p>
-<p>            transform-origin: center bottom;<br/></p>
-<p>            cursor: pointer;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket:hover:not(.launched) {<br/></p>
-<p>            transform: translateY(-5px) scale(1.02);<br/></p>
-<p>            filter: drop-shadow(0 8px 25px rgba(59, 130, 246, 0.4));<br/></p>
-<p>        }<br/></p>
-<p>        .rocket:hover:not(.launched) .rocket-body {<br/></p>
-<p>            box-shadow: <br/></p>
-<p>                inset 2px 0 8px rgba(255,255,255,0.4),</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                inset -2px 0 8px rgba(0,0,0,0.2),<br/></p>
-<p>                0 4px 30px rgba(59, 130, 246, 0.3);<br/></p>
-<p>        }<br/></p>
-<p>        .rocket:hover:not(.launched) .rocket-nose {<br/></p>
-<p>            box-shadow: <br/></p>
-<p>                inset 1px 1px 4px rgba(255,255,255,0.5),<br/></p>
-<p>                inset -1px -1px 4px rgba(0,0,0,0.3),<br/></p>
-<p>                0 2px 15px rgba(59, 130, 246, 0.4);<br/></p>
-<p>        }<br/></p>
-<p>        .rocket.launched {<br/></p>
-<p>            animation: interplanetary-journey 8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes interplanetary-journey {<br/></p>
-<p>            0% {<br/></p>
-<p>                transform: translateY(0) translateX(0) scale(1) rotate(0deg);<br/></p>
-<p>            }<br/></p>
-<p>            12% {<br/></p>
-<p>                transform: translateY(-150px) translateX(200px) scale(0.9) rotate(15deg);<br/></p>
-<p>            }<br/></p>
-<p>            25% {<br/></p>
-<p>                transform: translateY(-250px) translateX(350px) scale(0.8) rotate(30deg);<br/></p>
-<p>            }<br/></p>
-<p>            37% {<br/></p>
-<p>                transform: translateY(-200px) translateX(150px) scale(0.7) rotate(45deg);</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            }<br/></p>
-<p>            50% {<br/></p>
-<p>                transform: translateY(-300px) translateX(-50px) scale(0.6) rotate(60deg);<br/></p>
-<p>            }<br/></p>
-<p>            62% {<br/></p>
-<p>                transform: translateY(-400px) translateX(-200px) scale(0.5) rotate(75deg);<br/></p>
-<p>            }<br/></p>
-<p>            75% {<br/></p>
-<p>                transform: translateY(-350px) translateX(-400px) scale(0.4) rotate(90deg);<br/></p>
-<p>            }<br/></p>
-<p>            87% {<br/></p>
-<p>                transform: translateY(-500px) translateX(-300px) scale(0.3) rotate(105deg);<br/></p>
-<p>            }<br/></p>
-<p>            100% {<br/></p>
-<p>                transform: translateY(-800px) translateX(-100px) scale(0.2) rotate(120deg);<br/></p>
-<p>            }<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-body {<br/></p>
-<p>            width: 32px;<br/></p>
-<p>            height: 100px;<br/></p>
-<p>            background: linear-gradient(to bottom, #e2e8f0 0%, #cbd5e1 100%);<br/></p>
-<p>            margin: 0 auto;<br/></p>
-<p>            border-radius: 2px;<br/></p>
-<p>            position: relative;<br/></p>
-<p>            border: 1px solid #94a3b8;<br/></p>
-<p>        }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        .rocket-body::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 8px;<br/></p>
-<p>            left: 4px;<br/></p>
-<p>            right: 4px;<br/></p>
-<p>            height: 2px;<br/></p>
-<p>            background: #475569;<br/></p>
-<p>            border-radius: 1px;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-body::after {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            bottom: 8px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>            width: 20px;<br/></p>
-<p>            height: 12px;<br/></p>
-<p>            background: #64748b;<br/></p>
-<p>            border-radius: 2px;<br/></p>
-<p>            border: 1px solid #475569;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-nose {<br/></p>
-<p>            width: 32px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            height: 40px;<br/></p>
-<p>            background: #94a3b8;<br/></p>
-<p>            margin: 0 auto;<br/></p>
-<p>            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);<br/></p>
-<p>            position: relative;<br/></p>
-<p>            border: 1px solid #64748b;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-window {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 15px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>            width: 8px;<br/></p>
-<p>            height: 8px;<br/></p>
-<p>            background: #475569;<br/></p>
-<p>            border-radius: 1px;<br/></p>
-<p>            border: 1px solid #334155;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-details {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 30px;<br/></p>
-<p>            left: 4px;<br/></p>
-<p>            right: 4px;<br/></p>
-<p>            height: 50px;<br/></p>
-<p>            background: #f1f5f9;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            border: 1px solid #cbd5e1;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-details::before {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 10px;<br/></p>
-<p>            left: 4px;<br/></p>
-<p>            right: 4px;<br/></p>
-<p>            height: 1px;<br/></p>
-<p>            background: #64748b;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-details::after {<br/></p>
-<p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            bottom: 10px;<br/></p>
-<p>            left: 4px;<br/></p>
-<p>            right: 4px;<br/></p>
-<p>            height: 1px;<br/></p>
-<p>            background: #64748b;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket-fins {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            bottom: -15px;<br/></p>
-<p>            left: -12px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            right: -12px;<br/></p>
-<p>            height: 25px;<br/></p>
-<p>        }<br/></p>
-<p>        .fin {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            bottom: 0;<br/></p>
-<p>            background: #94a3b8;<br/></p>
-<p>            border: 1px solid #64748b;<br/></p>
-<p>        }<br/></p>
-<p>        .fin-left {<br/></p>
-<p>            left: 0;<br/></p>
-<p>            width: 16px;<br/></p>
-<p>            height: 20px;<br/></p>
-<p>            clip-path: polygon(0% 100%, 100% 100%, 70% 0%);<br/></p>
-<p>        }<br/></p>
-<p>        .fin-right {<br/></p>
-<p>            right: 0;<br/></p>
-<p>            width: 16px;<br/></p>
-<p>            height: 20px;<br/></p>
-<p>            clip-path: polygon(0% 100%, 100% 100%, 30% 0%);<br/></p>
-<p>        }<br/></p>
-<p>        .propulsion {<br/></p>
-<p>            position: absolute;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            bottom: -30px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>            width: 20px;<br/></p>
-<p>            height: 30px;<br/></p>
-<p>            opacity: 0;<br/></p>
-<p>            transition: opacity 0.3s;<br/></p>
-<p>        }<br/></p>
-<p>        .rocket.launched .propulsion {<br/></p>
-<p>            opacity: 1;<br/></p>
-<p>        }<br/></p>
-<p>        .flame {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            border-radius: 2px;<br/></p>
-<p>        }<br/></p>
-<p>        .flame-1 {<br/></p>
-<p>            width: 8px;<br/></p>
-<p>            height: 25px;<br/></p>
-<p>            background: linear-gradient(to top, #dc2626 0%, #f59e0b 100%);<br/></p>
-<p>            left: 6px;<br/></p>
-<p>        }<br/></p>
-<p>        .flame-2 {<br/></p>
-<p>            width: 6px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            height: 20px;<br/></p>
-<p>            background: linear-gradient(to top, #991b1b 0%, #dc2626 100%);<br/></p>
-<p>            left: 7px;<br/></p>
-<p>        }<br/></p>
-<p>        .flame-3 {<br/></p>
-<p>            display: none;<br/></p>
-<p>        }<br/></p>
-<p>        .flame-4 {<br/></p>
-<p>            display: none;<br/></p>
-<p>        }<br/></p>
-<p>        .exhaust-glow {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            bottom: -5px;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>            width: 16px;<br/></p>
-<p>            height: 16px;<br/></p>
-<p>            background: radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 100%);<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes rocket-shake {<br/></p>
-<p>            0%, 100% { transform: translateX(0); }<br/></p>
-<p>            10% { transform: translateX(-2px) rotate(-0.5deg); }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            20% { transform: translateX(2px) rotate(0.5deg); }<br/></p>
-<p>            30% { transform: translateX(-1px) rotate(-0.3deg); }<br/></p>
-<p>            40% { transform: translateX(1px) rotate(0.3deg); }<br/></p>
-<p>            50% { transform: translateX(-2px) rotate(-0.4deg); }<br/></p>
-<p>            60% { transform: translateX(2px) rotate(0.4deg); }<br/></p>
-<p>            70% { transform: translateX(-1px) rotate(-0.2deg); }<br/></p>
-<p>            80% { transform: translateX(1px) rotate(0.2deg); }<br/></p>
-<p>            90% { transform: translateX(-1px) rotate(-0.1deg); }<br/></p>
-<p>        }<br/></p>
-<p>        .launch-button {<br/></p>
-<p>            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);<br/></p>
-<p>            color: white;<br/></p>
-<p>            border: none;<br/></p>
-<p>            padding: 12px 24px;<br/></p>
-<p>            font-size: 0.875rem;<br/></p>
-<p>            font-weight: 500;<br/></p>
-<p>            border-radius: 6px;<br/></p>
-<p>            cursor: pointer;<br/></p>
-<p>            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);<br/></p>
-<p>            transition: all 0.2s ease;<br/></p>
-<p>            letter-spacing: -0.025em;<br/></p>
-<p>            position: relative;<br/></p>
-<p>            overflow: hidden;<br/></p>
-<p>        }<br/></p>
-<p>        .launch-button::before {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            content: '';<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 0;<br/></p>
-<p>            left: -100%;<br/></p>
-<p>            width: 100%;<br/></p>
-<p>            height: 100%;<br/></p>
-<p>            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);<br/></p>
-<p>            transition: left 0.5s;<br/></p>
-<p>        }<br/></p>
-<p>        .launch-button:hover::before {<br/></p>
-<p>            left: 100%;<br/></p>
-<p>        }<br/></p>
-<p>        .launch-button:hover {<br/></p>
-<p>            transform: translateY(-1px);<br/></p>
-<p>            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);<br/></p>
-<p>        }<br/></p>
-<p>        .launch-button:active {<br/></p>
-<p>            transform: translateY(0);<br/></p>
-<p>        }<br/></p>
-<p>        .launch-button.hidden {<br/></p>
-<p>            opacity: 0;<br/></p>
-<p>            pointer-events: none;<br/></p>
-<p>        }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        .launch-button:disabled {<br/></p>
-<p>            background: linear-gradient(135deg, #64748b 0%, #475569 100%);<br/></p>
-<p>            cursor: not-allowed;<br/></p>
-<p>            opacity: 0.6;<br/></p>
-<p>        }<br/></p>
-<p>        .launch-button:disabled:hover {<br/></p>
-<p>            transform: none;<br/></p>
-<p>            box-shadow: 0 2px 8px rgba(100, 116, 139, 0.2);<br/></p>
-<p>        }<br/></p>
-<p>        .system-stats {<br/></p>
-<p>            display: flex;<br/></p>
-<p>            flex-direction: column;<br/></p>
-<p>            gap: 10px;<br/></p>
-<p>            text-align: right;<br/></p>
-<p>        }<br/></p>
-<p>        .stat-item {<br/></p>
-<p>            display: flex;<br/></p>
-<p>            justify-content: space-between;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            gap: 15px;<br/></p>
-<p>            font-size: 0.875rem;<br/></p>
-<p>        }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        .stat-label {<br/></p>
-<p>            color: #94a3b8;<br/></p>
-<p>            font-weight: 400;<br/></p>
-<p>        }<br/></p>
-<p>        .stat-value {<br/></p>
-<p>            color: #22c55e;<br/></p>
-<p>            font-weight: 500;<br/></p>
-<p>            font-family: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;<br/></p>
-<p>        }<br/></p>
-<p>        .message-delivery {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            top: 50%;<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            transform: translate(-50%, -50%);<br/></p>
-<p>            background: rgba(15, 23, 42, 0.98);<br/></p>
-<p>            backdrop-filter: blur(24px);<br/></p>
-<p>            border: 1px solid rgba(148, 163, 184, 0.1);<br/></p>
-<p>            border-radius: 12px;<br/></p>
-<p>            padding: 40px 48px;<br/></p>
-<p>            text-align: center;<br/></p>
-<p>            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);<br/></p>
-<p>            opacity: 0;<br/></p>
-<p>            scale: 0.95;<br/></p>
-<p>            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);<br/></p>
-<p>            z-index: 200;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            max-width: 480px;<br/></p>
-<p>        }<br/></p>
-<p>        .message-delivery.show {<br/></p>
-<p>            opacity: 1;<br/></p>
-<p>            scale: 1;<br/></p>
-<p>        }<br/></p>
-<p>        .message-icon {<br/></p>
-<p>            width: 56px;<br/></p>
-<p>            height: 56px;<br/></p>
-<p>            background: linear-gradient(135deg, #3b82f6, #1e40af);<br/></p>
-<p>            border-radius: 8px;<br/></p>
-<p>            margin: 0 auto 20px;<br/></p>
-<p>            display: flex;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            justify-content: center;<br/></p>
-<p>            font-size: 1.5rem;<br/></p>
-<p>        }<br/></p>
-<p>        .message-title {<br/></p>
-<p>            font-size: 1.5rem;<br/></p>
-<p>            font-weight: 600;<br/></p>
-<p>            margin: 0 0 12px 0;<br/></p>
-<p>            color: #f8fafc;<br/></p>
-<p>            letter-spacing: -0.025em;<br/></p>
-<p>        }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        .message-subtitle {<br/></p>
-<p>            font-size: 1rem;<br/></p>
-<p>            color: #94a3b8;<br/></p>
-<p>            margin: 0 0 24px 0;<br/></p>
-<p>            line-height: 1.6;<br/></p>
-<p>        }<br/></p>
-<p>        .message-status {<br/></p>
-<p>            display: inline-flex;<br/></p>
-<p>            align-items: center;<br/></p>
-<p>            gap: 10px;<br/></p>
-<p>            background: rgba(34, 197, 94, 0.1);<br/></p>
-<p>            border: 1px solid rgba(34, 197, 94, 0.3);<br/></p>
-<p>            padding: 12px 20px;<br/></p>
-<p>            border-radius: 25px;<br/></p>
-<p>            color: #22c55e;<br/></p>
-<p>            font-weight: 600;<br/></p>
-<p>        }<br/></p>
-<p>        .particle-system {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            width: 100%;<br/></p>
-<p>            height: 100%;<br/></p>
-<p>            pointer-events: none;<br/></p>
-<p>            z-index: 150;<br/></p>
-<p>        }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>        .particle {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            width: 4px;<br/></p>
-<p>            height: 4px;<br/></p>
-<p>            background: #3b82f6;<br/></p>
-<p>            border-radius: 50%;<br/></p>
-<p>            opacity: 0;<br/></p>
-<p>            animation: particle-burst 3s ease-out forwards;<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes particle-burst {<br/></p>
-<p>            0% {<br/></p>
-<p>                opacity: 0;<br/></p>
-<p>                transform: scale(0) rotate(0deg);<br/></p>
-<p>            }<br/></p>
-<p>            20% {<br/></p>
-<p>                opacity: 1;<br/></p>
-<p>                transform: scale(1) rotate(90deg);<br/></p>
-<p>            }<br/></p>
-<p>            100% {<br/></p>
-<p>                opacity: 0;<br/></p>
-<p>                transform: scale(0) rotate(360deg) translateY(-100px);<br/></p>
-<p>            }<br/></p>
-<p>        }<br/></p>
-<p>        @keyframes flyby-particle {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            0% {<br/></p>
-<p>                opacity: 0;<br/></p>
-<p>                transform: scale(0);<br/></p>
-<p>            }<br/></p>
-<p>            30% {<br/></p>
-<p>                opacity: 1;<br/></p>
-<p>                transform: scale(1);<br/></p>
-<p>            }<br/></p>
-<p>            100% {<br/></p>
-<p>                opacity: 0;<br/></p>
-<p>                transform: scale(0) translateY(-40px);<br/></p>
-<p>            }<br/></p>
-<p>        }<br/></p>
-<p>        .trajectory-line {<br/></p>
-<p>            position: absolute;<br/></p>
-<p>            width: 2px;<br/></p>
-<p>            height: 0;<br/></p>
-<p>            background: linear-gradient(to top, transparent, #3b82f6, transparent);<br/></p>
-<p>            left: 50%;<br/></p>
-<p>            bottom: 200px;<br/></p>
-<p>            transform: translateX(-50%);<br/></p>
-<p>            opacity: 0;<br/></p>
-<p>            transition: all 2s ease-out;<br/></p>
-<p>        }<br/></p>
-<p>        .trajectory-line.active {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            height: 400px;<br/></p>
-<p>            opacity: 0.6;<br/></p>
-<p>        }<br/></p>
-<p>        @media (max-width: 768px) {<br/></p>
-<p>            .header {<br/></p>
-<p>                padding: 12px 16px;<br/></p>
-<p>            }<br/></p>
-<p>            .header-content {<br/></p>
-<p>                flex-direction: row;<br/></p>
-<p>                justify-content: space-between;<br/></p>
-<p>                gap: 10px;<br/></p>
-<p>            }<br/></p>
-<p>            .logo-text {<br/></p>
-<p>                font-size: 1rem;<br/></p>
-<p>            }<br/></p>
-<p>            .logo-icon {<br/></p>
-<p>                width: 28px;<br/></p>
-<p>                height: 28px;<br/></p>
-<p>                font-size: 14px;<br/></p>
-<p>            }<br/></p>
-<p>            .planet-selection-hint {<br/></p>
-<p>                top: 80px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                left: 16px;<br/></p>
-<p>                right: 16px;<br/></p>
-<p>                transform: none;<br/></p>
-<p>                padding: 12px 16px;<br/></p>
-<p>            }<br/></p>
-<p>            .hint-text {<br/></p>
-<p>                font-size: 0.8rem;<br/></p>
-<p>                justify-content: center;<br/></p>
-<p>            }<br/></p>
-<p>            .control-panel {<br/></p>
-<p>                padding: 20px 16px;<br/></p>
-<p>            }<br/></p>
-<p>            .control-content {<br/></p>
-<p>                grid-template-columns: 1fr;<br/></p>
-<p>                gap: 20px;<br/></p>
-<p>                text-align: center;<br/></p>
-<p>            }<br/></p>
-<p>            .mission-info {<br/></p>
-<p>                order: 2;<br/></p>
-<p>            }<br/></p>
-<p>            .launch-system {<br/></p>
-<p>                order: 1;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            }<br/></p>
-<p>            .system-stats {<br/></p>
-<p>                order: 3;<br/></p>
-<p>                text-align: center;<br/></p>
-<p>            }<br/></p>
-<p>            .rocket-container {<br/></p>
-<p>                width: 60px;<br/></p>
-<p>                height: 120px;<br/></p>
-<p>            }<br/></p>
-<p>            .message-delivery {<br/></p>
-<p>                margin: 16px;<br/></p>
-<p>                padding: 32px 24px;<br/></p>
-<p>            }<br/></p>
-<p>            .message-title {<br/></p>
-<p>                font-size: 1.25rem;<br/></p>
-<p>            }<br/></p>
-<p>            .message-subtitle {<br/></p>
-<p>                font-size: 0.9rem;<br/></p>
-<p>            }<br/></p>
-<p>            .celestial-body {<br/></p>
-<p>                min-width: 50px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                min-height: 50px;<br/></p>
-<p>            }<br/></p>
-<p>            .celestial-body:hover {<br/></p>
-<p>                transform: scale(1.4);<br/></p>
-<p>            }<br/></p>
-<p>            .celestial-body.selected {<br/></p>
-<p>                transform: scale(1.5);<br/></p>
-<p>            }<br/></p>
-<p>            .earth {<br/></p>
-<p>                width: 60px;<br/></p>
-<p>                height: 60px;<br/></p>
-<p>                top: -30px;<br/></p>
-<p>                right: -30px;<br/></p>
-<p>            }<br/></p>
-<p>            .mars {<br/></p>
-<p>                width: 50px;<br/></p>
-<p>                height: 50px;<br/></p>
-<p>                top: -25px;<br/></p>
-<p>                right: -25px;<br/></p>
-<p>            }<br/></p>
-<p>            .venus {<br/></p>
-<p>                width: 55px;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                height: 55px;<br/></p>
-<p>                top: -27.5px;<br/></p>
-<p>                right: -27.5px;<br/></p>
-<p>            }<br/></p>
-<p>            .mercury {<br/></p>
-<p>                width: 48px;<br/></p>
-<p>                height: 48px;<br/></p>
-<p>                top: -24px;<br/></p>
-<p>                right: -24px;<br/></p>
-<p>            }<br/></p>
-<p>            .jupiter {<br/></p>
-<p>                width: 80px;<br/></p>
-<p>                height: 80px;<br/></p>
-<p>                top: -40px;<br/></p>
-<p>                right: -40px;<br/></p>
-<p>            }<br/></p>
-<p>            .saturn {<br/></p>
-<p>                width: 70px;<br/></p>
-<p>                height: 70px;<br/></p>
-<p>                top: -35px;<br/></p>
-<p>                right: -35px;<br/></p>
-<p>            }<br/></p>
-<p>            .uranus {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                width: 65px;<br/></p>
-<p>                height: 65px;<br/></p>
-<p>                top: -32.5px;<br/></p>
-<p>                right: -32.5px;<br/></p>
-<p>            }<br/></p>
-<p>            .neptune {<br/></p>
-<p>                width: 62px;<br/></p>
-<p>                height: 62px;<br/></p>
-<p>                top: -31px;<br/></p>
-<p>                right: -31px;<br/></p>
-<p>            }<br/></p>
-<p>            .planet-info {<br/></p>
-<p>                font-size: 0.7rem;<br/></p>
-<p>                padding: 6px 10px;<br/></p>
-<p>                white-space: normal;<br/></p>
-<p>                max-width: 200px;<br/></p>
-<p>                text-align: center;<br/></p>
-<p>            }<br/></p>
-<p>        }<br/></p>
-<p>        @media (max-width: 480px) {<br/></p>
-<p>            .solar-system {<br/></p>
-<p>                transform: translate(-50%, -50%) scale(0.8);<br/></p>
-<p>            }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            .orbit {<br/></p>
-<p>                border-width: 0.5px;<br/></p>
-<p>            }<br/></p>
-<p>            .celestial-body {<br/></p>
-<p>                min-width: 45px;<br/></p>
-<p>                min-height: 45px;<br/></p>
-<p>            }<br/></p>
-<p>            .message-delivery {<br/></p>
-<p>                margin: 12px;<br/></p>
-<p>                padding: 24px 16px;<br/></p>
-<p>            }<br/></p>
-<p>            .hint-text {<br/></p>
-<p>                font-size: 0.75rem;<br/></p>
-<p>            }<br/></p>
-<p>        }<br/></p>
-<p>    &lt;/style&gt;<br/></p>
-<p>&lt;/head&gt;<br/></p>
-<p>&lt;body&gt;<br/></p>
-<p>    &lt;div class=&quot;mission-control&quot;&gt;<br/></p>
-<p>        &lt;header class=&quot;header&quot;&gt;<br/></p>
-<p>            &lt;div class=&quot;header-content&quot;&gt;<br/></p>
-<p>                &lt;div class=&quot;logo&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;logo-icon&quot;&gt;&#55357;&#56960;&lt;/div&gt;<br/></p>
-<p>                    &lt;div class=&quot;logo-text&quot;&gt;Stellar Communications&lt;/div&gt;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                &lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;mission-status&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;status-indicator&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;status-dot&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                        &lt;span&gt;Mission Ready&lt;/span&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>            &lt;/div&gt;<br/></p>
-<p>        &lt;/header&gt;<br/></p>
-<p>        &lt;div class=&quot;planet-selection-hint&quot; id=&quot;selectionHint&quot;&gt;<br/></p>
-<p>            &lt;p class=&quot;hint-text&quot;&gt;<br/></p>
-<p>                &#55357;&#56390; Tap any planet to select your destination<br/></p>
-<p>            &lt;/p&gt;<br/></p>
-<p>        &lt;/div&gt;<br/></p>
-<p>        &lt;div class=&quot;space-field&quot;&gt;<br/></p>
-<p>            &lt;div class=&quot;stars-layer&quot; id=&quot;starsLayer&quot;&gt;&lt;/div&gt;<br/></p>
-<p>            &lt;div class=&quot;nebula&quot;&gt;&lt;/div&gt;<br/></p>
-<p>            <br/></p>
-<p>            &lt;div class=&quot;solar-system&quot;&gt;<br/></p>
-<p>                &lt;!-- Orbital paths --&gt;<br/></p>
-<p>                &lt;div class=&quot;orbit orbit-mercury&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;orbit orbit-venus&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;orbit orbit-earth&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;orbit orbit-mars&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;orbit orbit-asteroid&quot;&gt;&lt;/div&gt;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                &lt;div class=&quot;orbit orbit-jupiter&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;orbit orbit-saturn&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;orbit orbit-uranus&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;orbit orbit-neptune&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Central Sun --&gt;<br/></p>
-<p>                &lt;div class=&quot;celestial-body sun&quot; data-planet=&quot;sun&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;planet-info&quot;&gt;Sol &#8226; Mass: 1.989&#215;10&#179;&#8304; kg &#8226; Temp: 5778K &#8226; Type: G2V&lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Mercury Orbit --&gt;<br/></p>
-<p>                &lt;div class=&quot;planet-orbit mercury-orbit&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;celestial-body mercury&quot; data-planet=&quot;mercury&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;planet-info&quot;&gt;Mercury &#8226; Mass: 3.301&#215;10&#178;&#179; kg &#8226; Orbit: 87.97d &#8226; Dist: 0.39 <br/>AU&lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Venus Orbit --&gt;<br/></p>
-<p>                &lt;div class=&quot;planet-orbit venus-orbit&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;celestial-body venus&quot; data-planet=&quot;venus&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;planet-info&quot;&gt;Venus &#8226; Mass: 4.867&#215;10&#178;&#8308; kg &#8226; Orbit: 224.7d &#8226; Dist: 0.72 <br/>AU&lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Earth Orbit --&gt;<br/></p>
-<p>                &lt;div class=&quot;planet-orbit earth-orbit&quot;&gt;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                    &lt;div class=&quot;celestial-body earth selected&quot; data-planet=&quot;earth&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;planet-info&quot;&gt;Earth &#8226; Mass: 5.972&#215;10&#178;&#8308; kg &#8226; Orbit: 365.26d &#8226; Dist: 1.00 <br/>AU&lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                    &lt;div class=&quot;earth-atmosphere&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Mars Orbit --&gt;<br/></p>
-<p>                &lt;div class=&quot;planet-orbit mars-orbit&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;celestial-body mars&quot; data-planet=&quot;mars&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;planet-info&quot;&gt;Mars &#8226; Mass: 6.417&#215;10&#178;&#179; kg &#8226; Orbit: 686.98d &#8226; Dist: 1.52 <br/>AU&lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Asteroid Belt --&gt;<br/></p>
-<p>                &lt;div class=&quot;asteroid-belt&quot; id=&quot;asteroidBelt&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Jupiter Orbit --&gt;<br/></p>
-<p>                &lt;div class=&quot;planet-orbit jupiter-orbit&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;celestial-body jupiter&quot; data-planet=&quot;jupiter&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;planet-info&quot;&gt;Jupiter &#8226; Mass: 1.898&#215;10&#178;&#8311; kg &#8226; Orbit: 11.86y &#8226; Dist: 5.20 <br/>AU&lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Saturn Orbit --&gt;<br/></p>
-<p>                &lt;div class=&quot;planet-orbit saturn-orbit&quot;&gt;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                    &lt;div class=&quot;celestial-body saturn&quot; data-planet=&quot;saturn&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;planet-info&quot;&gt;Saturn &#8226; Mass: 5.683&#215;10&#178;&#8310; kg &#8226; Orbit: 29.46y &#8226; Dist: 9.54 <br/>AU&lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Uranus Orbit --&gt;<br/></p>
-<p>                &lt;div class=&quot;planet-orbit uranus-orbit&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;celestial-body uranus&quot; data-planet=&quot;uranus&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;planet-info&quot;&gt;Uranus &#8226; Mass: 8.681&#215;10&#178;&#8309; kg &#8226; Orbit: 84.01y &#8226; Dist: 19.19 <br/>AU&lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                <br/></p>
-<p>                &lt;!-- Neptune Orbit --&gt;<br/></p>
-<p>                &lt;div class=&quot;planet-orbit neptune-orbit&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;celestial-body neptune&quot; data-planet=&quot;neptune&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;planet-info&quot;&gt;Neptune &#8226; Mass: 1.024&#215;10&#178;&#8310; kg &#8226; Orbit: 164.8y &#8226; Dist: 30.07 <br/>AU&lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>            &lt;/div&gt;<br/></p>
-<p>            <br/></p>
-<p>            &lt;div class=&quot;trajectory-line&quot; id=&quot;trajectoryLine&quot;&gt;&lt;/div&gt;<br/></p>
-<p>        &lt;/div&gt;<br/></p>
-<p>        &lt;div class=&quot;control-panel&quot;&gt;<br/></p>
-<p>            &lt;div class=&quot;control-content&quot;&gt;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                &lt;div class=&quot;mission-info&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;mission-title&quot; id=&quot;missionTitle&quot;&gt;Select a Planet to Begin Mission&lt;/div&gt;<br/></p>
-<p>                    &lt;div class=&quot;mission-details&quot; id=&quot;missionDetails&quot;&gt;<br/></p>
-<p>                        Tap any planet in the solar system&lt;br&gt;<br/></p>
-<p>                        Payload: &quot;Hello Khushi the Baddie!&quot;&lt;br&gt;<br/></p>
-<p>                        Status: Awaiting Destination Selection<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;launch-system&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;rocket-container&quot;&gt;<br/></p>
-<p>                        &lt;div class=&quot;rocket&quot; id=&quot;rocket&quot;&gt;<br/></p>
-<p>                            &lt;div class=&quot;rocket-nose&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                            &lt;div class=&quot;rocket-body&quot;&gt;<br/></p>
-<p>                                &lt;div class=&quot;rocket-window&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                                &lt;div class=&quot;rocket-details&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                                &lt;div class=&quot;rocket-fins&quot;&gt;<br/></p>
-<p>                                    &lt;div class=&quot;fin fin-left&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                                    &lt;div class=&quot;fin fin-right&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                                &lt;/div&gt;<br/></p>
-<p>                            &lt;/div&gt;<br/></p>
-<p>                            &lt;div class=&quot;propulsion&quot;&gt;<br/></p>
-<p>                                &lt;div class=&quot;exhaust-glow&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                                &lt;div class=&quot;flame flame-1&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                                &lt;div class=&quot;flame flame-2&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                                &lt;div class=&quot;flame flame-3&quot;&gt;&lt;/div&gt;<br/></p>
-<p>                                &lt;div class=&quot;flame flame-4&quot;&gt;&lt;/div&gt;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                            &lt;/div&gt;<br/></p>
-<p>                        &lt;/div&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                    &lt;button class=&quot;launch-button&quot; id=&quot;launchButton&quot; disabled&gt;<br/></p>
-<p>                        Select a Planet First<br/></p>
-<p>                    &lt;/button&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>                &lt;div class=&quot;system-stats&quot;&gt;<br/></p>
-<p>                    &lt;div class=&quot;stat-item&quot;&gt;<br/></p>
-<p>                        &lt;span class=&quot;stat-label&quot;&gt;Fuel Level:&lt;/span&gt;<br/></p>
-<p>                        &lt;span class=&quot;stat-value&quot;&gt;100%&lt;/span&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                    &lt;div class=&quot;stat-item&quot;&gt;<br/></p>
-<p>                        &lt;span class=&quot;stat-label&quot;&gt;Navigation:&lt;/span&gt;<br/></p>
-<p>                        &lt;span class=&quot;stat-value&quot;&gt;LOCKED&lt;/span&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                    &lt;div class=&quot;stat-item&quot;&gt;<br/></p>
-<p>                        &lt;span class=&quot;stat-label&quot;&gt;Weather:&lt;/span&gt;<br/></p>
-<p>                        &lt;span class=&quot;stat-value&quot;&gt;OPTIMAL&lt;/span&gt;<br/></p>
-<p>                    &lt;/div&gt;<br/></p>
-<p>                &lt;/div&gt;<br/></p>
-<p>            &lt;/div&gt;<br/></p>
-<p>        &lt;/div&gt;<br/></p>
-<p>        &lt;div class=&quot;message-delivery&quot; id=&quot;messageDelivery&quot;&gt;<br/></p>
-<p>            &lt;div class=&quot;message-icon&quot;&gt;&#55357;&#56545;&lt;/div&gt;</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            &lt;h1 class=&quot;message-title&quot;&gt;Message Delivered!&lt;/h1&gt;<br/></p>
-<p>            &lt;p class=&quot;message-subtitle&quot; id=&quot;deliveryMessage&quot;&gt;<br/></p>
-<p>                &quot;Hello Khushi the Baddie!&quot; has been successfully transmitted to Earth with precision <br/>targeting and optimal signal strength.<br/></p>
-<p>            &lt;/p&gt;<br/></p>
-<p>            &lt;div class=&quot;message-status&quot;&gt;<br/></p>
-<p>                &lt;span&gt;&#10003;&lt;/span&gt;<br/></p>
-<p>                &lt;span&gt;Delivery Confirmed&lt;/span&gt;<br/></p>
-<p>            &lt;/div&gt;<br/></p>
-<p>        &lt;/div&gt;<br/></p>
-<p>        &lt;div class=&quot;particle-system&quot; id=&quot;particleSystem&quot;&gt;&lt;/div&gt;<br/></p>
-<p>    &lt;/div&gt;<br/></p>
-<p>    &lt;script&gt;<br/></p>
-<p>        class StellarCommunications {<br/></p>
-<p>            constructor() {<br/></p>
-<p>                // Cache DOM elements<br/></p>
-<p>                this.elements = {<br/></p>
-<p>                    rocket: document.getElementById('rocket'),<br/></p>
-<p>                    launchButton: document.getElementById('launchButton'),<br/></p>
-<p>                    messageDelivery: document.getElementById('messageDelivery'),<br/></p>
-<p>                    trajectoryLine: document.getElementById('trajectoryLine'),<br/></p>
-<p>                    particleSystem: document.getElementById('particleSystem'),<br/></p>
-<p>                    missionTitle: document.getElementById('missionTitle'),<br/></p>
-<p>                    missionDetails: document.getElementById('missionDetails'),<br/></p>
-<p>                    deliveryMessage: document.getElementById('deliveryMessage'),<br/></p>
-<p>                    statusIndicator: document.querySelector('.status-indicator span'),</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                    statusDot: document.querySelector('.status-dot')<br/></p>
-<p>                };<br/></p>
-<p>                <br/></p>
-<p>                this.selectedPlanet = 'earth';<br/></p>
-<p>                this.isLaunching = false;<br/></p>
-<p>                <br/></p>
-<p>                // Simplified planet data<br/></p>
-<p>                this.planetData = {<br/></p>
-<p>                    earth: { name: 'Earth', distance: '1.00 AU', travelTime: '8.3 minutes' },<br/></p>
-<p>                    mars: { name: 'Mars', distance: '1.52 AU', travelTime: '12.6 minutes' },<br/></p>
-<p>                    venus: { name: 'Venus', distance: '0.72 AU', travelTime: '6.0 minutes' },<br/></p>
-<p>                    jupiter: { name: 'Jupiter', distance: '5.20 AU', travelTime: '43.2 minutes' },<br/></p>
-<p>                    saturn: { name: 'Saturn', distance: '9.54 AU', travelTime: '79.3 minutes' },<br/></p>
-<p>                    mercury: { name: 'Mercury', distance: '0.39 AU', travelTime: '3.2 minutes' },<br/></p>
-<p>                    uranus: { name: 'Uranus', distance: '19.19 AU', travelTime: '159.5 minutes' },<br/></p>
-<p>                    neptune: { name: 'Neptune', distance: '30.07 AU', travelTime: '249.8 minutes' }<br/></p>
-<p>                };<br/></p>
-<p>                <br/></p>
-<p>                this.init();<br/></p>
-<p>            }<br/></p>
-<p>            init() {<br/></p>
-<p>                this.generateStarField();<br/></p>
-<p>                this.setupPlanetSelection();<br/></p>
-<p>                this.elements.launchButton.addEventListener('click', (e) =&gt; {<br/></p>
-<p>                    e.preventDefault();<br/></p>
-<p>                    console.log('Launch button clicked!', {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                        selectedPlanet: this.selectedPlanet,<br/></p>
-<p>                        isLaunching: this.isLaunching,<br/></p>
-<p>                        buttonDisabled: this.elements.launchButton.disabled<br/></p>
-<p>                    });<br/></p>
-<p>                    this.initiateLaunch();<br/></p>
-<p>                });<br/></p>
-<p>                <br/></p>
-<p>                // Also add touch event for mobile<br/></p>
-<p>                this.elements.launchButton.addEventListener('touchstart', (e) =&gt; {<br/></p>
-<p>                    e.preventDefault();<br/></p>
-<p>                    console.log('Launch button touched!');<br/></p>
-<p>                    this.initiateLaunch();<br/></p>
-<p>                }, { passive: false });<br/></p>
-<p>            }<br/></p>
-<p>            setupPlanetSelection() {<br/></p>
-<p>                const celestialBodies = document.querySelectorAll('.celestial-body[data-planet]');<br/></p>
-<p>                const hint = document.getElementById('selectionHint');<br/></p>
-<p>                <br/></p>
-<p>                celestialBodies.forEach(body =&gt; {<br/></p>
-<p>                    const handleSelection = (e) =&gt; {<br/></p>
-<p>                        e.preventDefault();<br/></p>
-<p>                        const planet = body.dataset.planet;<br/></p>
-<p>                        if (planet &amp;&amp; planet !== 'sun') {<br/></p>
-<p>                            this.selectPlanet(planet);<br/></p>
-<p>                            if (hint) hint.style.display = 'none';<br/></p>
-<p>                        }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                    };<br/></p>
-<p>                    <br/></p>
-<p>                    body.addEventListener('click', handleSelection);<br/></p>
-<p>                    body.addEventListener('touchstart', handleSelection, { passive: false });<br/></p>
-<p>                });<br/></p>
-<p>            }<br/></p>
-<p>            selectPlanet(planetKey) {<br/></p>
-<p>                const planetInfo = this.planetData[planetKey];<br/></p>
-<p>                if (!planetInfo) return;<br/></p>
-<p>                this.selectedPlanet = planetKey;<br/></p>
-<p>                // Update UI elements using cached references<br/></p>
-<p>                this.elements.missionTitle.textContent = `Mission: Message to ${planetInfo.name}`;<br/></p>
-<p>                this.elements.missionDetails.innerHTML = <br/></p>
-<p>                    `Destination: ${planetInfo.name} (${planetInfo.distance})&lt;br&gt;Payload: &quot;Hello Khushi the <br/>Baddie!&quot;&lt;br&gt;Status: Ready for Launch &#8226; ETA: ${planetInfo.travelTime}`;<br/></p>
-<p>                // Update selection state<br/></p>
-<p>                document.querySelectorAll('.celestial-body').forEach(body =&gt; <br/>body.classList.remove('selected'));<br/></p>
-<p>                document.querySelector(`[data-planet=&quot;${planetKey}&quot;]`).classList.add('selected');<br/></p>
-<p>                // Enable launch button<br/></p>
-<p>                this.elements.launchButton.textContent = `Launch to ${planetInfo.name}`;<br/></p>
-<p>                this.elements.launchButton.disabled = false;<br/></p>
-<p>            }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            generateStarField() {<br/></p>
-<p>                const starsLayer = document.getElementById('starsLayer');<br/></p>
-<p>                const fragment = document.createDocumentFragment();<br/></p>
-<p>                <br/></p>
-<p>                // Reduced star count for better performance<br/></p>
-<p>                for (let i = 0; i &lt; 100; i++) {<br/></p>
-<p>                    const star = document.createElement('div');<br/></p>
-<p>                    star.className = Math.random() &gt; 0.8 ? 'star bright' : 'star';<br/></p>
-<p>                    <br/></p>
-<p>                    const size = Math.random() * 3 + 1;<br/></p>
-<p>                    star.style.cssText = `<br/></p>
-<p>                        left: ${Math.random() * 100}%;<br/></p>
-<p>                        top: ${Math.random() * 100}%;<br/></p>
-<p>                        width: ${size}px;<br/></p>
-<p>                        height: ${size}px;<br/></p>
-<p>                        animation-delay: ${Math.random() * 3}s;<br/></p>
-<p>                        animation-duration: ${Math.random() * 2 + 2}s;<br/></p>
-<p>                    `;<br/></p>
-<p>                    <br/></p>
-<p>                    fragment.appendChild(star);<br/></p>
-<p>                }<br/></p>
-<p>                <br/></p>
-<p>                starsLayer.appendChild(fragment);<br/></p>
-<p>                this.generateAsteroidBelt();<br/></p>
-<p>            }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            generateAsteroidBelt() {<br/></p>
-<p>                const asteroidBelt = document.getElementById('asteroidBelt');<br/></p>
-<p>                const asteroidCount = 80;<br/></p>
-<p>                for (let i = 0; i &lt; asteroidCount; i++) {<br/></p>
-<p>                    const asteroid = document.createElement('div');<br/></p>
-<p>                    asteroid.className = 'asteroid';<br/></p>
-<p>                    <br/></p>
-<p>                    const size = Math.random() * 2 + 2;<br/></p>
-<p>                    asteroid.style.width = size + 'px';<br/></p>
-<p>                    asteroid.style.height = size + 'px';<br/></p>
-<p>                    <br/></p>
-<p>                    const angle = (360 / asteroidCount) * i + Math.random() * 10;<br/></p>
-<p>                    asteroid.style.transform = `rotate(${angle}deg) translateX(300px) rotate(-${angle}deg)`;<br/></p>
-<p>                    <br/></p>
-<p>                    asteroid.style.animationDelay = Math.random() * 30 + 's';<br/></p>
-<p>                    asteroid.style.animationDuration = (25 + Math.random() * 10) + 's';<br/></p>
-<p>                    <br/></p>
-<p>                    asteroid.style.opacity = 0.3 + Math.random() * 0.4;<br/></p>
-<p>                    <br/></p>
-<p>                    const grayShade = Math.floor(Math.random() * 50) + 120;<br/></p>
-<p>                    asteroid.style.background = `rgb(${grayShade}, ${grayShade}, ${grayShade})`;<br/></p>
-<p>                    <br/></p>
-<p>                    asteroidBelt.appendChild(asteroid);<br/></p>
-<p>                }<br/></p>
-<p>            }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            createParticleBurst() {<br/></p>
-<p>                const particleCount = 25;<br/></p>
-<p>                <br/></p>
-<p>                for (let i = 0; i &lt; particleCount; i++) {<br/></p>
-<p>                    setTimeout(() =&gt; {<br/></p>
-<p>                        const particle = document.createElement('div');<br/></p>
-<p>                        particle.className = 'particle';<br/></p>
-<p>                        <br/></p>
-<p>                        const angle = (360 / particleCount) * i;<br/></p>
-<p>                        const distance = Math.random() * 100 + 50;<br/></p>
-<p>                        <br/></p>
-<p>                        particle.style.left = '50%';<br/></p>
-<p>                        particle.style.bottom = '200px';<br/></p>
-<p>                        particle.style.transform = `translate(-50%, 0) rotate(${angle}deg) <br/>translateY(-${distance}px)`;<br/></p>
-<p>                        particle.style.animationDelay = Math.random() * 0.5 + 's';<br/></p>
-<p>                        <br/></p>
-<p>                        const colors = ['#3b82f6', '#60a5fa', '#93c5fd', '#fbbf24', '#f59e0b'];<br/></p>
-<p>                        particle.style.background = colors[Math.floor(Math.random() * colors.length)];<br/></p>
-<p>                        <br/></p>
-<p>                        this.particleSystem.appendChild(particle);<br/></p>
-<p>                        <br/></p>
-<p>                        setTimeout(() =&gt; {<br/></p>
-<p>                            particle.remove();<br/></p>
-<p>                        }, 3000);<br/></p>
-<p>                    }, i * 50);<br/></p>
-<p>                }<br/></p>
-<p>            }</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>            updateMissionStatus(status) {<br/></p>
-<p>                this.elements.statusIndicator.textContent = status;<br/></p>
-<p>                <br/></p>
-<p>                if (status === 'Launch in Progress') {<br/></p>
-<p>                    this.elements.statusDot.style.background = '#f59e0b';<br/></p>
-<p>                } else if (status === 'Mission Complete') {<br/></p>
-<p>                    this.elements.statusDot.style.background = '#22c55e';<br/></p>
-<p>                } else if (status === 'Mission Ready') {<br/></p>
-<p>                    this.elements.statusDot.style.background = '#22c55e';<br/></p>
-<p>                }<br/></p>
-<p>            }<br/></p>
-<p>            initiateLaunch() {<br/></p>
-<p>                if (!this.selectedPlanet || this.isLaunching || this.elements.launchButton.disabled) return;<br/></p>
-<p>                <br/></p>
-<p>                this.isLaunching = true;<br/></p>
-<p>                const planetInfo = this.planetData[this.selectedPlanet];<br/></p>
-<p>                <br/></p>
-<p>                // Disable button and show countdown<br/></p>
-<p>                this.elements.launchButton.disabled = true;<br/></p>
-<p>                this.elements.launchButton.textContent = 'T-minus 3...';<br/></p>
-<p>                this.updateMissionStatus('Launch Sequence Initiated');<br/></p>
-<p>                <br/></p>
-<p>                // Countdown sequence<br/></p>
-<p>                setTimeout(() =&gt; {<br/></p>
-<p>                    this.elements.launchButton.textContent = 'T-minus 2...';</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                    this.updateMissionStatus('T-minus 2...');<br/></p>
-<p>                }, 1000);<br/></p>
-<p>                <br/></p>
-<p>                setTimeout(() =&gt; {<br/></p>
-<p>                    this.elements.launchButton.textContent = 'T-minus 1...';<br/></p>
-<p>                    this.updateMissionStatus('T-minus 1...');<br/></p>
-<p>                }, 2000);<br/></p>
-<p>                <br/></p>
-<p>                setTimeout(() =&gt; {<br/></p>
-<p>                    this.elements.launchButton.textContent = 'IGNITION!';<br/></p>
-<p>                    this.updateMissionStatus('Ignition!');<br/></p>
-<p>                }, 3000);<br/></p>
-<p>                <br/></p>
-<p>                // Launch sequence<br/></p>
-<p>                setTimeout(() =&gt; {<br/></p>
-<p>                    this.elements.trajectoryLine.classList.add('active');<br/></p>
-<p>                    this.createParticleBurst();<br/></p>
-<p>                    this.elements.rocket.classList.add('launched');<br/></p>
-<p>                    this.elements.launchButton.style.display = 'none';<br/></p>
-<p>                    this.updateMissionStatus('Launch in Progress');<br/></p>
-<p>                }, 3500);<br/></p>
-<p>                <br/></p>
-<p>                // Mission completion<br/></p>
-<p>                setTimeout(() =&gt; {<br/></p>
-<p>                    this.elements.deliveryMessage.innerHTML = <br/></p>
-<p>                        `&quot;Hello Khushi the Baddie!&quot; has been successfully transmitted to ${planetInfo.name} <br/>with precision targeting and optimal signal strength.`;<br/></p>
-<p>                    this.elements.messageDelivery.classList.add('show');</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                    this.updateMissionStatus('Mission Complete');<br/></p>
-<p>                }, 9000);<br/></p>
-<p>                <br/></p>
-<p>                // Reset<br/></p>
-<p>                setTimeout(() =&gt; this.resetMission(), 15000);<br/></p>
-<p>            }<br/></p>
-<p>            addRocketShake() {<br/></p>
-<p>                const rocketContainer = document.querySelector('.rocket-container');<br/></p>
-<p>                rocketContainer.style.animation = 'rocket-shake 0.5s ease-in-out';<br/></p>
-<p>                setTimeout(() =&gt; {<br/></p>
-<p>                    rocketContainer.style.animation = '';<br/></p>
-<p>                }, 500);<br/></p>
-<p>            }<br/></p>
-<p>            schedulePlanetaryFlybys() {<br/></p>
-<p>                const planets = [<br/></p>
-<p>                    { element: '.mercury', time: 1000, name: 'Mercury' },<br/></p>
-<p>                    { element: '.venus', time: 2000, name: 'Venus' },<br/></p>
-<p>                    { element: '.earth', time: 3000, name: 'Earth' },<br/></p>
-<p>                    { element: '.mars', time: 4000, name: 'Mars' },<br/></p>
-<p>                    { element: '.jupiter', time: 5000, name: 'Jupiter' },<br/></p>
-<p>                    { element: '.saturn', time: 6000, name: 'Saturn' }<br/></p>
-<p>                ];<br/></p>
-<p>                planets.forEach(planet =&gt; {<br/></p>
-<p>                    setTimeout(() =&gt; {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                        this.createPlanetaryFlyby(planet.element, planet.name);<br/></p>
-<p>                    }, planet.time);<br/></p>
-<p>                });<br/></p>
-<p>            }<br/></p>
-<p>            createPlanetaryFlyby(planetSelector, planetName) {<br/></p>
-<p>                const planet = document.querySelector(planetSelector);<br/></p>
-<p>                if (planet) {<br/></p>
-<p>                    planet.style.boxShadow = planet.style.boxShadow + ', 0 0 40px rgba(59, 130, 246, 0.8)';<br/></p>
-<p>                    planet.style.transform = 'scale(1.1)';<br/></p>
-<p>                    <br/></p>
-<p>                    this.createFlybyParticles(planet);<br/></p>
-<p>                    <br/></p>
-<p>                    setTimeout(() =&gt; {<br/></p>
-<p>                        planet.style.boxShadow = planet.style.boxShadow.replace(', 0 0 40px rgba(59, 130, <br/>246, 0.8)', '');<br/></p>
-<p>                        planet.style.transform = 'scale(1)';<br/></p>
-<p>                    }, 800);<br/></p>
-<p>                }<br/></p>
-<p>            }<br/></p>
-<p>            createFlybyParticles(planet) {<br/></p>
-<p>                const rect = planet.getBoundingClientRect();<br/></p>
-<p>                const particleCount = 8;<br/></p>
-<p>                <br/></p>
-<p>                for (let i = 0; i &lt; particleCount; i++) {<br/></p>
-<p>                    setTimeout(() =&gt; {<br/></p>
-<p>                        const particle = document.createElement('div');</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                        particle.className = 'particle';<br/></p>
-<p>                        particle.style.position = 'absolute';<br/></p>
-<p>                        particle.style.left = rect.left + rect.width / 2 + 'px';<br/></p>
-<p>                        particle.style.top = rect.top + rect.height / 2 + 'px';<br/></p>
-<p>                        particle.style.width = '3px';<br/></p>
-<p>                        particle.style.height = '3px';<br/></p>
-<p>                        particle.style.background = '#60a5fa';<br/></p>
-<p>                        particle.style.borderRadius = '50%';<br/></p>
-<p>                        particle.style.pointerEvents = 'none';<br/></p>
-<p>                        particle.style.zIndex = '160';<br/></p>
-<p>                        <br/></p>
-<p>                        const angle = (360 / particleCount) * i;<br/></p>
-<p>                        const distance = 30 + Math.random() * 20;<br/></p>
-<p>                        <br/></p>
-<p>                        particle.style.animation = `flyby-particle 1s ease-out forwards`;<br/></p>
-<p>                        particle.style.transform = `rotate(${angle}deg) translateY(-${distance}px)`;<br/></p>
-<p>                        <br/></p>
-<p>                        document.body.appendChild(particle);<br/></p>
-<p>                        <br/></p>
-<p>                        setTimeout(() =&gt; {<br/></p>
-<p>                            particle.remove();<br/></p>
-<p>                        }, 1000);<br/></p>
-<p>                    }, i * 50);<br/></p>
-<p>                }<br/></p>
-<p>            }<br/></p>
-<p>            resetMission() {</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>                this.elements.rocket.classList.remove('launched');<br/></p>
-<p>                this.elements.messageDelivery.classList.remove('show');<br/></p>
-<p>                this.elements.trajectoryLine.classList.remove('active');<br/></p>
-<p>                this.elements.launchButton.style.display = 'block';<br/></p>
-<p>                this.elements.launchButton.disabled = false;<br/></p>
-<p>                this.elements.particleSystem.innerHTML = '';<br/></p>
-<p>                this.updateMissionStatus('Mission Ready');<br/></p>
-<p>                this.isLaunching = false;<br/></p>
-<p>                <br/></p>
-<p>                // Restore button text based on selected planet<br/></p>
-<p>                if (this.selectedPlanet &amp;&amp; this.planetData[this.selectedPlanet]) {<br/></p>
-<p>                    this.elements.launchButton.textContent = `Launch to <br/>${this.planetData[this.selectedPlanet].name}`;<br/></p>
-<p>                } else {<br/></p>
-<p>                    this.elements.launchButton.textContent = 'Select a Planet First';<br/></p>
-<p>                    this.elements.launchButton.disabled = true;<br/></p>
-<p>                }<br/></p>
-<p>            }<br/></p>
-<p>        }<br/></p>
-<p>        // Initialize the application<br/></p>
-<p>        document.addEventListener('DOMContentLoaded', () =&gt; {<br/></p>
-<p>            new StellarCommunications();<br/></p>
-<p>        });<br/></p>
-<p>    &lt;/script&gt;<br/></p>
-<p>&lt;script&gt;(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var <br/>d=b.createElement('script');d.innerHTML=&quot;window.__CF$cv$params=<br/>{r:'98d02f66306dbdd5',t:'MTc2MDIwNDg3My4wMDAwMDA='};var <br/>a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-</p>
-
-</div></div>
-<div style="page-break-before:always; page-break-after:always"><div><p>platform/scripts/jsd/main.js';document.getElementsByTagName('head')<br/>[0].appendChild(a);&quot;;b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var <br/>a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.s<br/>tyle.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!=<br/>=document.readyState)c();else <br/>if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var <br/>e=document.onreadystatechange||function(){};document.onreadystatechange=function(b)<br/>{e(b);'loading'!==document.readyState&amp;&amp;(document.onreadystatechange=e,c())}}}})();&lt;/script&gt;<br/>&lt;/body&gt;<br/></p>
-<p>&lt;/html&gt;</p>
-
-</div></div>
-</body></html>
+
+<div class="mission-control">
+
+<header class="header">
+
+<div class="header-content">
+
+<div class="logo">
+
+<div class="logo-icon">��</div>
+
+<div class="logo-text">Stellar Communications</div>
+
+</div>
+
+<div class="mission-status">
+
+<div class="status-indicator">
+
+<div class="status-dot"></div>
+
+<span>Mission Ready</span>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+<div class="planet-selection-hint" id="selectionHint">
+
+<p class="hint-text">
+
+�� Tap any planet to select your destination
+
+</p>
+
+</div>
+
+<div class="space-field">
+
+<div class="stars-layer" id="starsLayer"></div>
+
+<div class="nebula"></div>
+
+
+
+<div class="solar-system">
+
+<!-- Orbital paths -->
+
+<div class="orbit orbit-mercury"></div>
+
+<div class="orbit orbit-venus"></div>
+
+<div class="orbit orbit-earth"></div>
+
+<div class="orbit orbit-mars"></div>
+
+<div class="orbit orbit-asteroid"></div>
+
+<div class="orbit orbit-jupiter"></div>
+
+<div class="orbit orbit-saturn"></div>
+
+<div class="orbit orbit-uranus"></div>
+
+<div class="orbit orbit-neptune"></div>
+
+
+
+<!-- Central Sun -->
+
+<div class="celestial-body sun" data-planet="sun">
+
+<div class="planet-info">Sol • Mass: 1.989×10³⁰ kg • Temp: 5778K • Type: G2V</div>
+
+</div>
+
+
+
+<!-- Mercury Orbit -->
+
+<div class="planet-orbit mercury-orbit">
+
+<div class="celestial-body mercury" data-planet="mercury">
+
+<div class="planet-info">Mercury • Mass: 3.301×10²³ kg • Orbit: 87.97d • Dist: 0.39
+AU</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Venus Orbit -->
+
+<div class="planet-orbit venus-orbit">
+
+<div class="celestial-body venus" data-planet="venus">
+
+<div class="planet-info">Venus • Mass: 4.867×10²⁴ kg • Orbit: 224.7d • Dist: 0.72
+AU</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Earth Orbit -->
+
+<div class="planet-orbit earth-orbit">
+
+<div class="celestial-body earth selected" data-planet="earth">
+
+<div class="planet-info">Earth • Mass: 5.972×10²⁴ kg • Orbit: 365.26d • Dist: 1.00
+AU</div>
+
+</div>
+
+<div class="earth-atmosphere"></div>
+
+</div>
+
+
+
+<!-- Mars Orbit -->
+
+<div class="planet-orbit mars-orbit">
+
+<div class="celestial-body mars" data-planet="mars">
+
+<div class="planet-info">Mars • Mass: 6.417×10²³ kg • Orbit: 686.98d • Dist: 1.52
+AU</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Asteroid Belt -->
+
+<div class="asteroid-belt" id="asteroidBelt"></div>
+
+
+
+<!-- Jupiter Orbit -->
+
+<div class="planet-orbit jupiter-orbit">
+
+<div class="celestial-body jupiter" data-planet="jupiter">
+
+<div class="planet-info">Jupiter • Mass: 1.898×10²⁷ kg • Orbit: 11.86y • Dist: 5.20
+AU</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Saturn Orbit -->
+
+<div class="planet-orbit saturn-orbit">
+
+<div class="celestial-body saturn" data-planet="saturn">
+
+<div class="planet-info">Saturn • Mass: 5.683×10²⁶ kg • Orbit: 29.46y • Dist: 9.54
+AU</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Uranus Orbit -->
+
+<div class="planet-orbit uranus-orbit">
+
+<div class="celestial-body uranus" data-planet="uranus">
+
+<div class="planet-info">Uranus • Mass: 8.681×10²⁵ kg • Orbit: 84.01y • Dist: 19.19
+AU</div>
+
+</div>
+
+</div>
+
+
+
+<!-- Neptune Orbit -->
+
+<div class="planet-orbit neptune-orbit">
+
+<div class="celestial-body neptune" data-planet="neptune">
+
+<div class="planet-info">Neptune • Mass: 1.024×10²⁶ kg • Orbit: 164.8y • Dist: 30.07
+AU</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="trajectory-line" id="trajectoryLine"></div>
+
+</div>
+
+<div class="control-panel">
+
+<div class="control-content">
+
+<div class="mission-info">
+
+<div class="mission-title" id="missionTitle">Select a Planet to Begin Mission</div>
+
+<div class="mission-details" id="missionDetails">
+
+Tap any planet in the solar system<br>
+
+Payload: "Hello Khushi the Baddie!"<br>
+
+Status: Awaiting Destination Selection
+
+</div>
+
+</div>
+
+<div class="launch-system">
+
+<div class="rocket-container">
+
+<div class="rocket" id="rocket">
+
+<div class="rocket-nose"></div>
+
+<div class="rocket-body">
+
+<div class="rocket-window"></div>
+
+<div class="rocket-details"></div>
+
+<div class="rocket-fins">
+
+<div class="fin fin-left"></div>
+
+<div class="fin fin-right"></div>
+
+</div>
+
+</div>
+
+<div class="propulsion">
+
+<div class="exhaust-glow"></div>
+
+<div class="flame flame-1"></div>
+
+<div class="flame flame-2"></div>
+
+<div class="flame flame-3"></div>
+
+<div class="flame flame-4"></div>
+
+</div>
+
+</div>
+
+</div>
+
+<button class="launch-button" id="launchButton" disabled>
+
+Select a Planet First
+
+</button>
+
+</div>
+
+<div class="system-stats">
+
+<div class="stat-item">
+
+<span class="stat-label">Fuel Level:</span>
+
+<span class="stat-value">100%</span>
+
+</div>
+
+<div class="stat-item">
+
+<span class="stat-label">Navigation:</span>
+
+<span class="stat-value">LOCKED</span>
+
+</div>
+
+<div class="stat-item">
+
+<span class="stat-label">Weather:</span>
+
+<span class="stat-value">OPTIMAL</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="message-delivery" id="messageDelivery">
+
+<div class="message-icon">��</div>
+
+<h1 class="message-title">Message Delivered!</h1>
+
+<p class="message-subtitle" id="deliveryMessage">
+
+"Hello Khushi the Baddie!" has been successfully transmitted to Earth with precision
+targeting and optimal signal strength.
+
+</p>
+
+<div class="message-status">
+
+<span>✓</span>
+
+<span>Delivery Confirmed</span>
+
+</div>
+
+</div>
+
+<div class="particle-system" id="particleSystem"></div>
+
+</div>
+
+<script>
+
+class StellarCommunications {
+
+constructor() {
+
+// Cache DOM elements
+
+this.elements = {
+
+rocket: document.getElementById('rocket'),
+
+launchButton: document.getElementById('launchButton'),
+
+messageDelivery: document.getElementById('messageDelivery'),
+
+trajectoryLine: document.getElementById('trajectoryLine'),
+
+particleSystem: document.getElementById('particleSystem'),
+
+missionTitle: document.getElementById('missionTitle'),
+
+missionDetails: document.getElementById('missionDetails'),
+
+deliveryMessage: document.getElementById('deliveryMessage'),
+
+statusIndicator: document.querySelector('.status-indicator span'),
+
+statusDot: document.querySelector('.status-dot')
+
+};
+
+
+
+this.selectedPlanet = 'earth';
+
+this.isLaunching = false;
+
+
+
+// Simplified planet data
+
+this.planetData = {
+
+earth: { name: 'Earth', distance: '1.00 AU', travelTime: '8.3 minutes' },
+
+mars: { name: 'Mars', distance: '1.52 AU', travelTime: '12.6 minutes' },
+
+venus: { name: 'Venus', distance: '0.72 AU', travelTime: '6.0 minutes' },
+
+jupiter: { name: 'Jupiter', distance: '5.20 AU', travelTime: '43.2 minutes' },
+
+saturn: { name: 'Saturn', distance: '9.54 AU', travelTime: '79.3 minutes' },
+
+mercury: { name: 'Mercury', distance: '0.39 AU', travelTime: '3.2 minutes' },
+
+uranus: { name: 'Uranus', distance: '19.19 AU', travelTime: '159.5 minutes' },
+
+neptune: { name: 'Neptune', distance: '30.07 AU', travelTime: '249.8 minutes' }
+
+};
+
+
+
+this.init();
+
+}
+
+init() {
+
+this.generateStarField();
+
+this.setupPlanetSelection();
+
+this.elements.launchButton.addEventListener('click', (e) => {
+
+e.preventDefault();
+
+console.log('Launch button clicked!', {
+
+selectedPlanet: this.selectedPlanet,
+
+isLaunching: this.isLaunching,
+
+buttonDisabled: this.elements.launchButton.disabled
+
+});
+
+this.initiateLaunch();
+
+});
+
+
+
+// Also add touch event for mobile
+
+this.elements.launchButton.addEventListener('touchstart', (e) => {
+
+e.preventDefault();
+
+console.log('Launch button touched!');
+
+this.initiateLaunch();
+
+}, { passive: false });
+
+}
+
+setupPlanetSelection() {
+
+const celestialBodies = document.querySelectorAll('.celestial-body[data-planet]');
+
+const hint = document.getElementById('selectionHint');
+
+
+
+celestialBodies.forEach(body => {
+
+const handleSelection = (e) => {
+
+e.preventDefault();
+
+const planet = body.dataset.planet;
+
+if (planet && planet !== 'sun') {
+
+this.selectPlanet(planet);
+
+if (hint) hint.style.display = 'none';
+
+}
+
+};
+
+
+
+body.addEventListener('click', handleSelection);
+
+body.addEventListener('touchstart', handleSelection, { passive: false });
+
+});
+
+}
+
+selectPlanet(planetKey) {
+
+const planetInfo = this.planetData[planetKey];
+
+if (!planetInfo) return;
+
+this.selectedPlanet = planetKey;
+
+// Update UI elements using cached references
+
+this.elements.missionTitle.textContent = `Mission: Message to ${planetInfo.name}`;
+
+this.elements.missionDetails.innerHTML =
+
+`Destination: ${planetInfo.name} (${planetInfo.distance})<br>Payload: "Hello Khushi the
+Baddie!"<br>Status: Ready for Launch • ETA: ${planetInfo.travelTime}`;
+
+// Update selection state
+
+document.querySelectorAll('.celestial-body').forEach(body =>
+body.classList.remove('selected'));
+
+document.querySelector(`[data-planet="${planetKey}"]`).classList.add('selected');
+
+// Enable launch button
+
+this.elements.launchButton.textContent = `Launch to ${planetInfo.name}`;
+
+this.elements.launchButton.disabled = false;
+
+}
+
+generateStarField() {
+
+const starsLayer = document.getElementById('starsLayer');
+
+const fragment = document.createDocumentFragment();
+
+
+
+// Reduced star count for better performance
+
+for (let i = 0; i < 100; i++) {
+
+const star = document.createElement('div');
+
+star.className = Math.random() > 0.8 ? 'star bright' : 'star';
+
+
+
+const size = Math.random() * 3 + 1;
+
+star.style.cssText = `
+
+left: ${Math.random() * 100}%;
+
+top: ${Math.random() * 100}%;
+
+width: ${size}px;
+
+height: ${size}px;
+
+animation-delay: ${Math.random() * 3}s;
+
+animation-duration: ${Math.random() * 2 + 2}s;
+
+`;
+
+
+
+fragment.appendChild(star);
+
+}
+
+
+
+starsLayer.appendChild(fragment);
+
+this.generateAsteroidBelt();
+
+}
+
+generateAsteroidBelt() {
+
+const asteroidBelt = document.getElementById('asteroidBelt');
+
+const asteroidCount = 80;
+
+for (let i = 0; i < asteroidCount; i++) {
+
+const asteroid = document.createElement('div');
+
+asteroid.className = 'asteroid';
+
+
+
+const size = Math.random() * 2 + 2;
+
+asteroid.style.width = size + 'px';
+
+asteroid.style.height = size + 'px';
+
+
+
+const angle = (360 / asteroidCount) * i + Math.random() * 10;
+
+asteroid.style.transform = `rotate(${angle}deg) translateX(300px) rotate(-${angle}deg)`;
+
+
+
+asteroid.style.animationDelay = Math.random() * 30 + 's';
+
+asteroid.style.animationDuration = (25 + Math.random() * 10) + 's';
+
+
+
+asteroid.style.opacity = 0.3 + Math.random() * 0.4;
+
+
+
+const grayShade = Math.floor(Math.random() * 50) + 120;
+
+asteroid.style.background = `rgb(${grayShade}, ${grayShade}, ${grayShade})`;
+
+
+
+asteroidBelt.appendChild(asteroid);
+
+}
+
+}
+
+createParticleBurst() {
+
+const particleCount = 25;
+
+
+
+for (let i = 0; i < particleCount; i++) {
+
+setTimeout(() => {
+
+const particle = document.createElement('div');
+
+particle.className = 'particle';
+
+
+
+const angle = (360 / particleCount) * i;
+
+const distance = Math.random() * 100 + 50;
+
+
+
+particle.style.left = '50%';
+
+particle.style.bottom = '200px';
+
+particle.style.transform = `translate(-50%, 0) rotate(${angle}deg)
+translateY(-${distance}px)`;
+
+particle.style.animationDelay = Math.random() * 0.5 + 's';
+
+
+
+const colors = ['#3b82f6', '#60a5fa', '#93c5fd', '#fbbf24', '#f59e0b'];
+
+particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+
+
+this.particleSystem.appendChild(particle);
+
+
+
+setTimeout(() => {
+
+particle.remove();
+
+}, 3000);
+
+}, i * 50);
+
+}
+
+}
+
+updateMissionStatus(status) {
+
+this.elements.statusIndicator.textContent = status;
+
+
+
+if (status === 'Launch in Progress') {
+
+this.elements.statusDot.style.background = '#f59e0b';
+
+} else if (status === 'Mission Complete') {
+
+this.elements.statusDot.style.background = '#22c55e';
+
+} else if (status === 'Mission Ready') {
+
+this.elements.statusDot.style.background = '#22c55e';
+
+}
+
+}
+
+initiateLaunch() {
+
+if (!this.selectedPlanet || this.isLaunching || this.elements.launchButton.disabled) return;
+
+
+
+this.isLaunching = true;
+
+const planetInfo = this.planetData[this.selectedPlanet];
+
+
+
+// Disable button and show countdown
+
+this.elements.launchButton.disabled = true;
+
+this.elements.launchButton.textContent = 'T-minus 3...';
+
+this.updateMissionStatus('Launch Sequence Initiated');
+
+
+
+// Countdown sequence
+
+setTimeout(() => {
+
+this.elements.launchButton.textContent = 'T-minus 2...';
+
+this.updateMissionStatus('T-minus 2...');
+
+}, 1000);
+
+
+
+setTimeout(() => {
+
+this.elements.launchButton.textContent = 'T-minus 1...';
+
+this.updateMissionStatus('T-minus 1...');
+
+}, 2000);
+
+
+
+setTimeout(() => {
+
+this.elements.launchButton.textContent = 'IGNITION!';
+
+this.updateMissionStatus('Ignition!');
+
+}, 3000);
+
+
+
+// Launch sequence
+
+setTimeout(() => {
+
+this.elements.trajectoryLine.classList.add('active');
+
+this.createParticleBurst();
+
+this.elements.rocket.classList.add('launched');
+
+this.elements.launchButton.style.display = 'none';
+
+this.updateMissionStatus('Launch in Progress');
+
+}, 3500);
+
+
+
+// Mission completion
+
+setTimeout(() => {
+
+this.elements.deliveryMessage.innerHTML =
+
+`"Hello Khushi the Baddie!" has been successfully transmitted to ${planetInfo.name}
+with precision targeting and optimal signal strength.`;
+
+this.elements.messageDelivery.classList.add('show');
+
+this.updateMissionStatus('Mission Complete');
+
+}, 9000);
+
+
+
+// Reset
+
+setTimeout(() => this.resetMission(), 15000);
+
+}
+
+addRocketShake() {
+
+const rocketContainer = document.querySelector('.rocket-container');
+
+rocketContainer.style.animation = 'rocket-shake 0.5s ease-in-out';
+
+setTimeout(() => {
+
+rocketContainer.style.animation = '';
+
+}, 500);
+
+}
+
+schedulePlanetaryFlybys() {
+
+const planets = [
+
+{ element: '.mercury', time: 1000, name: 'Mercury' },
+
+{ element: '.venus', time: 2000, name: 'Venus' },
+
+{ element: '.earth', time: 3000, name: 'Earth' },
+
+{ element: '.mars', time: 4000, name: 'Mars' },
+
+{ element: '.jupiter', time: 5000, name: 'Jupiter' },
+
+{ element: '.saturn', time: 6000, name: 'Saturn' }
+
+];
+
+planets.forEach(planet => {
+
+setTimeout(() => {
+
+this.createPlanetaryFlyby(planet.element, planet.name);
+
+}, planet.time);
+
+});
+
+}
+
+createPlanetaryFlyby(planetSelector, planetName) {
+
+const planet = document.querySelector(planetSelector);
+
+if (planet) {
+
+planet.style.boxShadow = planet.style.boxShadow + ', 0 0 40px rgba(59, 130, 246, 0.8)';
+
+planet.style.transform = 'scale(1.1)';
+
+
+
+this.createFlybyParticles(planet);
+
+
+
+setTimeout(() => {
+
+planet.style.boxShadow = planet.style.boxShadow.replace(', 0 0 40px rgba(59, 130,
+246, 0.8)', '');
+
+planet.style.transform = 'scale(1)';
+
+}, 800);
+
+}
+
+}
+
+createFlybyParticles(planet) {
+
+const rect = planet.getBoundingClientRect();
+
+const particleCount = 8;
+
+
+
+for (let i = 0; i < particleCount; i++) {
+
+setTimeout(() => {
+
+const particle = document.createElement('div');
+
+particle.className = 'particle';
+
+particle.style.position = 'absolute';
+
+particle.style.left = rect.left + rect.width / 2 + 'px';
+
+particle.style.top = rect.top + rect.height / 2 + 'px';
+
+particle.style.width = '3px';
+
+particle.style.height = '3px';
+
+particle.style.background = '#60a5fa';
+
+particle.style.borderRadius = '50%';
+
+particle.style.pointerEvents = 'none';
+
+particle.style.zIndex = '160';
+
+
+
+const angle = (360 / particleCount) * i;
+
+const distance = 30 + Math.random() * 20;
+
+
+
+particle.style.animation = `flyby-particle 1s ease-out forwards`;
+
+particle.style.transform = `rotate(${angle}deg) translateY(-${distance}px)`;
+
+
+
+document.body.appendChild(particle);
+
+
+
+setTimeout(() => {
+
+particle.remove();
+
+}, 1000);
+
+}, i * 50);
+
+}
+
+}
+
+resetMission() {
+
+this.elements.rocket.classList.remove('launched');
+
+this.elements.messageDelivery.classList.remove('show');
+
+this.elements.trajectoryLine.classList.remove('active');
+
+this.elements.launchButton.style.display = 'block';
+
+this.elements.launchButton.disabled = false;
+
+this.elements.particleSystem.innerHTML = '';
+
+this.updateMissionStatus('Mission Ready');
+
+this.isLaunching = false;
+
+
+
+// Restore button text based on selected planet
+
+if (this.selectedPlanet && this.planetData[this.selectedPlanet]) {
+
+this.elements.launchButton.textContent = `Launch to
+${this.planetData[this.selectedPlanet].name}`;
+
+} else {
+
+this.elements.launchButton.textContent = 'Select a Planet First';
+
+this.elements.launchButton.disabled = true;
+
+}
+
+}
+
+}
+
+// Initialize the application
+
+document.addEventListener('DOMContentLoaded', () => {
+
+new StellarCommunications();
+
+});
+
+</script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var
+d=b.createElement('script');d.innerHTML="window.__CF$cv$params=
+{r:'98d02f66306dbdd5',t:'MTc2MDIwNDg3My4wMDAwMDA='};var
+a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-
+
+platform/scripts/jsd/main.js';document.getElementsByTagName('head')
+[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var
+a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.s
+tyle.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!=
+=document.readyState)c();else
+if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var
+e=document.onreadystatechange||function(){};document.onreadystatechange=function(b)
+{e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+
+</html>
