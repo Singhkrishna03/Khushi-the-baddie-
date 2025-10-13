@@ -1109,6 +1109,133 @@
             opacity: 0.6;
         }
 
+        /* === NEW: Sparkle + Easter Egg + Mood Glow styles === */
+        .sparkle {
+          position: absolute;
+          width: 6px; height: 6px;
+          background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0.6), transparent 60%);
+          border-radius: 50%;
+          pointer-events: none;
+          opacity: 0;
+          transform: translateY(0) scale(0.85);
+          animation: sparkle-float 1.6s cubic-bezier(.22,.9,.36,1) forwards;
+          z-index: 280;
+          filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
+        }
+
+        @keyframes sparkle-float {
+          0% { transform: translateY(0) scale(0.6); opacity: 0.85; }
+          40% { transform: translateY(-18px) scale(1); opacity: 1; }
+          100% { transform: translateY(-70px) scale(0.8); opacity: 0; }
+        }
+
+        .easter-egg {
+          position: absolute;
+          color: #fffdfa;
+          font-size: 1rem;
+          background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+          padding: 10px 14px;
+          border-radius: 12px;
+          text-shadow: 0 0 8px rgba(255,255,255,0.8);
+          animation: egg-glow 6s ease-in-out forwards;
+          opacity: 0;
+          transform: translate(-50%, -50%) scale(0.96);
+          white-space: nowrap;
+          z-index: 290;
+          pointer-events: none;
+          border: 1px solid rgba(255,255,255,0.06);
+          box-shadow: 0 8px 30px rgba(255, 240, 200, 0.06);
+        }
+
+        @keyframes egg-glow {
+          0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); filter: blur(1px); }
+          18% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
+          82% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          100% { opacity: 0; transform: translate(-50%, -50%) scale(1.05); }
+        }
+
+        /* === NEW: Romantic Message Popup Styles === */
+        .romantic-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            padding: 32px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            scale: 0.9;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 300;
+            max-width: 500px;
+            width: 90%;
+            pointer-events: none;
+        }
+
+        .romantic-message.show {
+            opacity: 1;
+            scale: 1;
+            pointer-events: auto;
+        }
+
+        .romantic-heart {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b9d, #ff3366);
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 25px rgba(255, 51, 102, 0.4);
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .romantic-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            color: #f8fafc;
+            letter-spacing: -0.025em;
+        }
+
+        .romantic-text {
+            font-size: 1rem;
+            color: #e2e8f0;
+            margin: 0 0 24px 0;
+            line-height: 1.6;
+        }
+
+        .romantic-close {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+            transition: all 0.2s ease;
+            letter-spacing: -0.025em;
+        }
+
+        .romantic-close:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        /* === END ROMANTIC STYLES === */
+
         @media (max-width: 768px) {
             .header {
                 padding: 12px 16px;
@@ -1174,6 +1301,19 @@
             .message-delivery {
                 margin: 16px;
                 padding: 32px 24px;
+            }
+
+            .romantic-message {
+                margin: 16px;
+                padding: 24px 20px;
+            }
+
+            .romantic-title {
+                font-size: 1.25rem;
+            }
+
+            .romantic-text {
+                font-size: 0.9rem;
             }
 
             .message-title {
@@ -1281,10 +1421,100 @@
                 padding: 24px 16px;
             }
 
+            .romantic-message {
+                margin: 12px;
+                padding: 20px 16px;
+            }
+
             .hint-text {
                 font-size: 0.75rem;
             }
         }
+<!-- 🌍✨ Planet Cards Section (Hidden initially) -->
+<div id="planetCardsContainer" style="display:flex; flex-wrap:wrap; justify-content:center; padding:40px 20px; opacity:0; transform:translateY(30px); transition:opacity 1s ease, transform 1s ease;">
+  <div class="planet-card" data-planet="Earth">
+    <h3 class="planet-name">Earth</h3>
+    <p class="planet-quote"></p>
+  </div>
+  <div class="planet-card" data-planet="Mars">
+    <h3 class="planet-name">Mars</h3>
+    <p class="planet-quote"></p>
+  </div>
+  <div class="planet-card" data-planet="Venus">
+    <h3 class="planet-name">Venus</h3>
+    <p class="planet-quote"></p>
+  </div>
+  <div class="planet-card" data-planet="Jupiter">
+    <h3 class="planet-name">Jupiter</h3>
+    <p class="planet-quote"></p>
+  </div>
+  <div class="planet-card" data-planet="Neptune">
+    <h3 class="planet-name">Neptune</h3>
+    <p class="planet-quote"></p>
+  </div>
+</div>
+
+<style>
+  .planet-card {
+    max-width: 240px;
+    padding: 16px;
+    margin: 12px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    background: linear-gradient(135deg, rgba(255,255,255,0.8), rgba(240,248,255,0.6));
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    color: #1e293b;
+    text-align: center;
+  }
+  .planet-name {
+    margin: 0 0 8px 0;
+    font-size: 1.05rem;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+  }
+  .planet-quote {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #334155;
+  }
+</style>
+
+<script>
+  // 🌍 Insert quotes
+  (function(){
+    const planetQuotes = {
+      "Earth": "You make the world feel softer.",
+      "Mars": "Bold, fiery, unstoppable - just like you.",
+      "Venus": "Love looks prettier when it's yours.",
+      "Jupiter": "You've got an energy that even I orbit around.",
+      "Neptune": "Peace follows you, like tides follow the moon."
+    };
+    document.querySelectorAll('.planet-card[data-planet]').forEach(card => {
+      const key = card.getAttribute('data-planet');
+      const quoteEl = card.querySelector('.planet-quote');
+      if (quoteEl && planetQuotes[key]) quoteEl.textContent = planetQuotes[key];
+    });
+  })();
+
+  // ✨ Fade in cards after launch
+  function showPlanetCards() {
+    const container = document.getElementById('planetCardsContainer');
+    container.style.opacity = '1';
+    container.style.transform = 'translateY(0)';
+  }
+
+  // 🚀 Hook into your existing launch event
+  // If you already have a function like launchRocket() — just call showPlanetCards() at the end of it
+  const originalLaunch = window.launchRocket;
+  window.launchRocket = function() {
+    if (typeof originalLaunch === 'function') {
+      originalLaunch();
+    }
+    // Delay to match rocket animation duration
+    setTimeout(showPlanetCards, 2500);
+  };
+</script>
+
     </style>
 </head>
 <body>
@@ -1462,6 +1692,17 @@
         </div>
 
         <div class="particle-system" id="particleSystem"></div>
+
+        <!-- NEW: Romantic Message Popup -->
+        <div class="romantic-message" id="romanticMessage">
+            <div class="romantic-heart">💖</div>
+            <h2 class="romantic-title" id="romanticTitle">Message Delivered with Love!</h2>
+            <p class="romantic-text" id="romanticText">
+                Your special message has reached its destination across the cosmos. 
+                Even light-years can't diminish the warmth of your words.
+            </p>
+            <button class="romantic-close" id="romanticClose">Continue Journey</button>
+        </div>
     </div>
 
     <script>
@@ -1483,17 +1724,54 @@
                 
                 this.selectedPlanet = 'earth';
                 this.isLaunching = false;
+                this.easterEggShown = false; // NEW: ensures Easter egg only shows once per page load
                 
-                // Simplified planet data
+                // Simplified planet data (now with color for mood glow)
                 this.planetData = {
-                    earth: { name: 'Earth', distance: '1.00 AU', travelTime: '8.3 minutes' },
-                    mars: { name: 'Mars', distance: '1.52 AU', travelTime: '12.6 minutes' },
-                    venus: { name: 'Venus', distance: '0.72 AU', travelTime: '6.0 minutes' },
-                    jupiter: { name: 'Jupiter', distance: '5.20 AU', travelTime: '43.2 minutes' },
-                    saturn: { name: 'Saturn', distance: '9.54 AU', travelTime: '79.3 minutes' },
-                    mercury: { name: 'Mercury', distance: '0.39 AU', travelTime: '3.2 minutes' },
-                    uranus: { name: 'Uranus', distance: '19.19 AU', travelTime: '159.5 minutes' },
-                    neptune: { name: 'Neptune', distance: '30.07 AU', travelTime: '249.8 minutes' }
+                    earth: { name: 'Earth', distance: '1.00 AU', travelTime: '8.3 minutes', color: '#3b82f6' },
+                    mars: { name: 'Mars', distance: '1.52 AU', travelTime: '12.6 minutes', color: '#dc2626' },
+                    venus: { name: 'Venus', distance: '0.72 AU', travelTime: '6.0 minutes', color: '#eab308' },
+                    jupiter: { name: 'Jupiter', distance: '5.20 AU', travelTime: '43.2 minutes', color: '#f59e0b' },
+                    saturn: { name: 'Saturn', distance: '9.54 AU', travelTime: '79.3 minutes', color: '#facc15' },
+                    mercury: { name: 'Mercury', distance: '0.39 AU', travelTime: '3.2 minutes', color: '#9ca3af' },
+                    uranus: { name: 'Uranus', distance: '19.19 AU', travelTime: '159.5 minutes', color: '#06b6d4' },
+                    neptune: { name: 'Neptune', distance: '30.07 AU', travelTime: '249.8 minutes', color: '#1d4ed8' }
+                };
+
+                // NEW: Romantic messages for each planet
+                this.romanticMessages = {
+                    earth: {
+                        title: "Hello from Home!",
+                        message: "Even among billions, your light shines the brightest. Welcome home, Khushi!"
+                    },
+                    mars: {
+                        title: "Red Planet Romance",
+                        message: "My love for you could terraform this entire planet. You're out of this world!"
+                    },
+                    venus: {
+                        title: "Morning Star Affection", 
+                        message: "Just like Venus, you're the brightest light in my morning sky."
+                    },
+                    jupiter: {
+                        title: "Giant Heart",
+                        message: "My love for you is bigger than Jupiter's Great Red Spot - and that's saying something!"
+                    },
+                    saturn: {
+                        title: "Encircled in Love",
+                        message: "Like Saturn's rings, my love for you has no beginning and no end."
+                    },
+                    mercury: {
+                        title: "Close to My Heart",
+                        message: "You're always close to my heart, just like Mercury to the Sun."
+                    },
+                    uranus: {
+                        title: "Unique Connection", 
+                        message: "Our connection is as unique as Uranus' sideways spin - one of a kind in the universe."
+                    },
+                    neptune: {
+                        title: "Deep Blue Devotion",
+                        message: "My feelings for you run as deep as Neptune's blue oceans - endless and mysterious."
+                    }
                 };
                 
                 this.init();
@@ -1518,6 +1796,17 @@
                     console.log('Launch button touched!');
                     this.initiateLaunch();
                 }, { passive: false });
+
+                // NEW: Attach Easter egg (double-tap) behavior to the Sun
+                this.addSunEasterEgg();
+
+                // NEW: Setup romantic message close button
+                const romanticClose = document.getElementById('romanticClose');
+                if (romanticClose) {
+                    romanticClose.addEventListener('click', () => {
+                        this.hideRomanticMessage();
+                    });
+                }
             }
 
             setupPlanetSelection() {
@@ -1528,9 +1817,14 @@
                     const handleSelection = (e) => {
                         e.preventDefault();
                         const planet = body.dataset.planet;
-                        if (planet && planet !== 'sun') {
-                            this.selectPlanet(planet);
-                            if (hint) hint.style.display = 'none';
+                        if (planet) {
+                            // NEW: create sparkles and mood glow on any planet tap
+                            this.createSparkles(e, body);
+                            this.triggerMoodGlow(planet);
+                            if (planet && planet !== 'sun') {
+                                this.selectPlanet(planet);
+                                if (hint) hint.style.display = 'none';
+                            }
                         }
                     };
                     
@@ -1640,6 +1934,69 @@
                 }
             }
 
+            // NEW: create soft white/pastel sparkles when tapping a planet
+            createSparkles(e, element) {
+                try {
+                    const rect = element.getBoundingClientRect();
+                    const sparkleCount = 10 + Math.floor(Math.random() * 6);
+
+                    for (let i = 0; i < sparkleCount; i++) {
+                        const sparkle = document.createElement('div');
+                        sparkle.className = 'sparkle';
+                        const offsetX = (Math.random() * rect.width) - rect.width / 2;
+                        const offsetY = (Math.random() * rect.height) - rect.height / 2;
+                        // Place around the element center with slight random
+                        sparkle.style.left = `${rect.left + rect.width / 2 + offsetX}px`;
+                        sparkle.style.top = `${rect.top + rect.height / 2 + offsetY}px`;
+                        sparkle.style.width = sparkle.style.height = `${Math.random() * 6 + 4}px`;
+                        // Randomize slight animation delay
+                        sparkle.style.animationDelay = `${Math.random() * 0.18}s`;
+                        // Gentle rotation/translate variation via transform, kept in CSS animation
+                        document.body.appendChild(sparkle);
+                        // Remove after animation completes
+                        setTimeout(() => {
+                            if (sparkle && sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
+                        }, 1800 + Math.random() * 400);
+                    }
+                } catch (err) {
+                    console.warn('Sparkle creation failed', err);
+                }
+            }
+
+            // NEW: mood glow background transition — matches the planet's dominant color then fades back
+            triggerMoodGlow(planetKey) {
+                const planet = this.planetData[planetKey];
+                if (!planet) return;
+                const base = document.documentElement || document.body;
+                // Keep the inline style safe — capture current computed style backup
+                const original = window.getComputedStyle(document.body).backgroundImage || '';
+
+                // Use a soft radial glow with the planet color (add some transparency)
+                const color = planet.color || '#ffffff';
+                const overlay = `radial-gradient(circle at 50% 40%, ${this.hexToRgba(color, 0.22)} 0%, ${this.hexToRgba(color, 0.08)} 30%, transparent 70%), linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)`;
+
+                // Smooth transition
+                document.body.style.transition = 'background 1.2s ease';
+                document.body.style.background = overlay;
+
+                // fade back after ~4.5 seconds
+                clearTimeout(this._moodTimeout);
+                this._moodTimeout = setTimeout(() => {
+                    document.body.style.background = 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)';
+                }, 4500);
+            }
+
+            // Utility: convert hex to rgba string
+            hexToRgba(hex, alpha = 1) {
+                let h = hex.replace('#', '');
+                if (h.length === 3) h = h.split('').map(c => c + c).join('');
+                const bigint = parseInt(h, 16);
+                const r = (bigint >> 16) & 255;
+                const g = (bigint >> 8) & 255;
+                const b = bigint & 255;
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+
             updateMissionStatus(status) {
                 this.elements.statusIndicator.textContent = status;
                 
@@ -1688,11 +2045,10 @@
                     this.updateMissionStatus('Launch in Progress');
                 }, 3500);
                 
-                // Mission completion
+                // Mission completion - NOW SHOWS ROMANTIC MESSAGE
                 setTimeout(() => {
-                    this.elements.deliveryMessage.innerHTML = 
-                        `"Hello Khushi the Baddie!" has been successfully transmitted to ${planetInfo.name} with precision targeting and optimal signal strength.`;
-                    this.elements.messageDelivery.classList.add('show');
+                    // Show romantic message instead of the technical one
+                    this.showRomanticMessage(this.selectedPlanet);
                     this.updateMissionStatus('Mission Complete');
                 }, 9000);
                 
@@ -1776,6 +2132,7 @@
             resetMission() {
                 this.elements.rocket.classList.remove('launched');
                 this.elements.messageDelivery.classList.remove('show');
+                this.hideRomanticMessage(); // NEW: Hide romantic message
                 this.elements.trajectoryLine.classList.remove('active');
                 this.elements.launchButton.style.display = 'block';
                 this.elements.launchButton.disabled = false;
@@ -1790,6 +2147,82 @@
                     this.elements.launchButton.textContent = 'Select a Planet First';
                     this.elements.launchButton.disabled = true;
                 }
+            }
+
+            // NEW: Attach double-tap detection to the Sun and show the Easter egg once per load
+            addSunEasterEgg() {
+                const sun = document.querySelector('.sun');
+                if (!sun) return;
+                let tapCount = 0;
+                let tapTimer = null;
+
+                sun.addEventListener('click', () => {
+                    tapCount++;
+                    clearTimeout(tapTimer);
+                    tapTimer = setTimeout(() => {
+                        if (tapCount === 2 && !this.easterEggShown) {
+                            this.showEasterEgg(sun);
+                            this.easterEggShown = true;
+                        }
+                        tapCount = 0;
+                    }, 320); // 320ms window for double-tap
+                });
+
+                // Also handle touch events for better mobile double-tap behavior
+                let lastTouch = 0;
+                sun.addEventListener('touchstart', (ev) => {
+                    const now = Date.now();
+                    if (now - lastTouch < 320) {
+                        // double-tap detected
+                        if (!this.easterEggShown) {
+                            this.showEasterEgg(sun);
+                            this.easterEggShown = true;
+                        }
+                    }
+                    lastTouch = now;
+                }, { passive: true });
+            }
+
+            // NEW: show the Easter egg message floating near the Sun, auto-fades in ~6s, and removes itself
+            showEasterEgg(sunElement) {
+                try {
+                    const rect = sunElement.getBoundingClientRect();
+                    const egg = document.createElement('div');
+                    egg.className = 'easter-egg';
+                    egg.innerText = 'Hey Khushi, he made this whole galaxy just for you 💫';
+                    // Position slightly above the sun center (floating near the sun)
+                    egg.style.left = `${rect.left + rect.width / 2}px`;
+                    egg.style.top = `${rect.top - rect.height * 0.6}px`; // float above the sun
+                    document.body.appendChild(egg);
+                    // remove after animation completes (~6s)
+                    setTimeout(() => {
+                        if (egg && egg.parentNode) egg.parentNode.removeChild(egg);
+                    }, 6200);
+                } catch (err) {
+                    console.warn('Easter egg failed to show', err);
+                }
+            }
+
+            // NEW: Show romantic message when rocket lands
+            showRomanticMessage(planetKey) {
+                const message = this.romanticMessages[planetKey] || {
+                    title: "Cosmic Connection",
+                    message: "Your message has traveled across space to reach its destination. Love knows no bounds!"
+                };
+                
+                // Update message content
+                document.getElementById('romanticTitle').textContent = message.title;
+                document.getElementById('romanticText').textContent = message.message;
+                
+                // Show the message
+                const romanticMessage = document.getElementById('romanticMessage');
+                romanticMessage.classList.add('show');
+            }
+
+            // NEW: Hide romantic message  
+            hideRomanticMessage() {
+                const romanticMessage = document.getElementById('romanticMessage');
+                romanticMessage.classList.remove('show');
             }
         }
 
